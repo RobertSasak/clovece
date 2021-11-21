@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "boardgame.io": "0.49.5",
     "expo": "~43.0.2",
     "expo-status-bar": "~1.1.0",
     "react": "17.0.1",
