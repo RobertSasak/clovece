@@ -5,12 +5,14 @@ import { Platform } from 'react-native'
 import Game from './Game'
 import Board from './Board'
 
-const client = Platform.OS === 'web' ? ClientReact : ClientReactNative
+const client: typeof ClientReact =
+    Platform.OS === 'web' ? ClientReact : ClientReactNative
 
 const Client = client({
-  game: Game,
-  board: Board,
-  debug: Platform.OS === 'web',
+    game: Game,
+    board: Board,
+    debug: Platform.OS === 'web',
+    numPlayers: 2,
 })
 
 export default Client
