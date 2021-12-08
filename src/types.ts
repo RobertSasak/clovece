@@ -7,8 +7,6 @@ export enum Color {
     Yellow = 'yellow',
 }
 
-type PizzaSize = keyof typeof Color
-
 export interface Token {
     color: Color
     square: number | null
@@ -17,15 +15,18 @@ export interface Token {
     endSquare: number | null
 }
 
+export type Homes = {
+    [key: PlayerID]: {
+        [key in Color]: boolean
+    }
+}
+
 export interface State {
     size: number
     tokens: Token[]
     squares: (number | null)[]
     die: number | null
+    moves: number
     kicked: number | null
-    homes: {
-        [key: PlayerID]: {
-            [key in Color]: boolean
-        }
-    }
+    homes: Homes
 }

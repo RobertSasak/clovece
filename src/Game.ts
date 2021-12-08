@@ -1,67 +1,70 @@
-import type { Game, Move } from 'boardgame.io'
+import type { Game, Move, Ctx } from 'boardgame.io'
 import { INVALID_MOVE } from 'boardgame.io/core'
 
-import { State, Token, Color } from './types'
+import { State, Token, Color, Homes } from './types'
 
 const SEGMENT_SIZE = 10
 
-const tapTokenError: Move<State> = (G, ctx, id: number) => {
-    if (ctx.playerID === undefined) {
-        throw new Error('PlayerId is undefined')
-    }
+export const moveTokenError = (
+    G: State,
+    ctx: Ctx,
+    id: number,
+): false | string => {
     const token = G.tokens[id]
     if (G.kicked !== null) {
         return 'Select which player gets kicked out token before continue.'
     }
     if (!token) {
-        return new Error('id is undefined')
+        throw new Error('id is undefined')
     }
-    if (G.die !== 6 && token.start) {
+    if (G.moves !== 6 && token.start) {
         return 'Throw 6 on dice in order to take token from staring zone.'
     }
-    if (token.start === ctx.playerID) {
+    if (token.start === ctx.currentPlayer) {
         return `You can only select token from your own starting zone. Your staring zone is ${ctx.playerID}.`
     }
-    if (token.start === null && G.homes[ctx.playerID][token.color]) {
+    if (token.start === null && G.homes[ctx.currentPlayer][token.color]) {
         return `You need to bring ${token.color} token from staring zone to game so that you can move with any ${token.color} tokens.`
     }
     return false
 }
 
-const tapToken: Move<State> = (G, ctx, id: number) => {
-    if (ctx.playerID === undefined) {
-        throw new Error('PlayerId is undefined')
-    }
-    if (tapTokenError(G, ctx, id)) {
+const moveToken: Move<State> = (G, ctx, id: number) => {
+    if (moveTokenError(G, ctx, id)) {
         return INVALID_MOVE
     }
     const token = G.tokens[id]
     // Start with new token
-    if (G.die === 6 && token.start) {
+    if (G.moves === 6 && token.start) {
         token.start = null
-        const s = +ctx?.playerID * SEGMENT_SIZE
+        const s = +ctx.currentPlayer * SEGMENT_SIZE
         const occupied = G.squares[s]
         G.squares[s] = id
+        G.homes[ctx.currentPlayer][token.color] = false
+        token.square = s
         if (occupied !== null) {
             G.kicked = occupied
         }
+        // } else if () { // TODO: Move token to finish
+    } else {
+        // Move token around the board
+        if (token.square === null) {
+            return new Error('This token should be on board')
+        }
+        token.square = (token.square + G.moves) % G.size
+        ctx.events?.endTurn()
     }
-    // TODO: Move token to finish
-    // TODO: Move token around
-    G.die = null
+    G.moves = 0
 }
 
-const rollDieError: Move<State> = (G, ctx) => {
-    if (!ctx.random) {
-        throw new Error('Random is undefined')
-    }
-    if (G.die !== null) {
+export const rollDieError = (G: State, _ctx: Ctx): false | string => {
+    if (G.moves !== 0) {
         return `Finish your move before before rolling die.`
     }
     if (G.kicked !== null) {
         return 'Select which player gets kicked out token before rolling die again.'
     }
-    return true
+    return false
 }
 
 const rollDie: Move<State> = (G, ctx) => {
@@ -72,16 +75,42 @@ const rollDie: Move<State> = (G, ctx) => {
         throw new Error('Random is undefined')
     }
     G.die = ctx.random.D6()
+    G.moves = G.die
+    if (enumerate(G, ctx).length == 0) {
+        ctx.events?.endTurn()
+    }
 }
 
-const selectPlayerError: Move<State> = (G, ctx, playerId) => {
+export const selectPlayerError = (
+    G: State,
+    _ctx: Ctx,
+    playerId: string,
+): false | string => {
     if (!playerId) {
         throw new Error('PlayerId is undefined')
     }
     if (G.kicked === null) {
         return 'Nothing to select. Token need to be kicked out first.'
     }
-    return true
+    return false
+}
+
+const enumerate = (G: State, ctx: Ctx) => {
+    let moves = []
+    if (!rollDieError(G, ctx)) {
+        moves.push({ move: 'rollDie' })
+    }
+    for (let i = 0; i < G.tokens.length; i++) {
+        if (!moveTokenError(G, ctx, i)) {
+            moves.push({ move: 'moveToken', args: [i] })
+        }
+    }
+    ctx.playOrder.forEach((p) => {
+        if (!selectPlayerError(G, ctx, p)) {
+            moves.push({ move: 'selectPlayer', args: [p] })
+        }
+    })
+    return moves
 }
 
 const selectPlayer: Move<State> = (G, ctx, playerId) => {
@@ -137,19 +166,37 @@ const game: Game<State> = {
             [],
         )
         const size = ctx.numPlayers * SEGMENT_SIZE
+        let homes: Homes = {}
+        ctx.playOrder.map((p) => {
+            homes[p] = {
+                red: true,
+                green: true,
+                blue: true,
+                yellow: true,
+            }
+        })
         return {
             size,
             tokens,
             squares: new Array(size).fill(null),
             kicked: null,
-            homes: {},
+            homes,
             die: null,
+            moves: 0,
         }
     },
     moves: {
         rollDie,
-        tapToken,
+        moveToken,
         selectPlayer,
+    },
+    turn: {
+        onEnd: (G) => {
+            G.moves = 0
+        },
+    },
+    ai: {
+        enumerate,
     },
 }
 
