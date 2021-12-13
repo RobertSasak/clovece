@@ -75,6 +75,7 @@ const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves, events }) => {
                 color: Color.Yellow,
             },
         ],
+        onPress: (tokenId: number) => console.log('token pressed', tokenId)
     }
 
     return (

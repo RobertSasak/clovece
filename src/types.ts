@@ -62,4 +62,5 @@ export interface GenericPlayingBoardProps {
         playerId: number;
         color: Color;
     }[];
+    onPress: (tokenId: number) => void;
 }

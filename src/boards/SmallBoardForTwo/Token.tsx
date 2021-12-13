@@ -7,6 +7,7 @@ interface TokenProps {
   y: number;
   size: number;
   color: string;
+  onPress?: () => void
 }
 
 export const Token: React.FC<TokenProps> = (props) => {
@@ -20,6 +21,9 @@ export const Token: React.FC<TokenProps> = (props) => {
       stroke="black"
       strokeWidth="2"
       fill={props.color}
+      // TODO: onPress vs onClick
+      // https://github.com/react-native-svg/react-native-svg/issues/1483
+      onClick={props.onPress}
     />
   );
 };

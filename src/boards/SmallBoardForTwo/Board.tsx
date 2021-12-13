@@ -164,6 +164,7 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
             y={field.y}
             color={getColor(token.color)}
             size={TOKEN_SIZE}
+            onPress={() => props.onPress(token.id)}
           />
         );
       });
