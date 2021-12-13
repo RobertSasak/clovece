@@ -3,7 +3,7 @@ import type { BoardProps } from 'boardgame.io/react'
 import { Pressable, Text, HStack, VStack, Box, Button, View } from 'native-base'
 
 import Token from './components/Token'
-import { State } from './types'
+import { Color, FieldSector, State } from './types'
 import { moveTokenError, rollDieError } from './Game'
 import { PlayingBoard } from './boards/PlayingBoard'
 import { BoardType } from './boards/types'
@@ -13,8 +13,69 @@ const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves, events }) => {
     const { endTurn } = events
 
     const playingBoardProps = {
-
-    };
+        players: [
+            { name: 'Player 1', color: Color.Red },
+            { name: 'Player 2', color: Color.Green },
+        ],
+        tokens: [
+            {
+                id: 0,
+                sector: FieldSector.STACK,
+                fieldId: 0,
+                playerId: 0,
+                color: Color.Red,
+            },
+            {
+                id: 1,
+                sector: FieldSector.STACK,
+                fieldId: 1,
+                playerId: 0,
+                color: Color.Green,
+            },
+            {
+                id: 2,
+                sector: FieldSector.BOARD,
+                fieldId: 0,
+                playerId: 0,
+                color: Color.Blue,
+            },
+            {
+                id: 3,
+                sector: FieldSector.BOARD,
+                fieldId: 1,
+                playerId: 0,
+                color: Color.Yellow,
+            },
+            {
+                id: 4,
+                sector: FieldSector.STACK,
+                fieldId: 0,
+                playerId: 1,
+                color: Color.Red,
+            },
+            {
+                id: 5,
+                sector: FieldSector.STACK,
+                fieldId: 1,
+                playerId: 1,
+                color: Color.Green,
+            },
+            {
+                id: 6,
+                sector: FieldSector.BOARD,
+                fieldId: 6,
+                playerId: 1,
+                color: Color.Blue,
+            },
+            {
+                id: 7,
+                sector: FieldSector.HOME,
+                fieldId: 1,
+                playerId: 1,
+                color: Color.Yellow,
+            },
+        ],
+    }
 
     return (
         <>
