@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import type { BoardProps } from 'boardgame.io/react'
 import { Pressable, Text, HStack, VStack, Box, Button, View } from 'native-base'
 
@@ -7,75 +7,73 @@ import { Color, FieldSector, State } from './types'
 import { moveTokenError, rollDieError } from './Game'
 import { PlayingBoard } from './boards/PlayingBoard'
 import { BoardType } from './boards/types'
+import { getBoardDefinition } from './boards/getBoardDefinition'
 
 const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves, events }) => {
     const { moveToken, rollDie } = moves
     const { endTurn } = events
+
+    const selectedBoard = BoardType.SMALL_BOARD_FOR_TWO;
+    const def = getBoardDefinition(selectedBoard);
+
+    // TMP: this will be in G
+    const [tokens, setTokens] = useState(
+        // generate based on `def`
+        [0, 1].flatMap((playerId)  => {
+            return [...Array(def.tokensPerPlayer).keys()]
+                .map((tokenId) => {
+                    return {
+                        id: (playerId * def.tokensPerPlayer) + tokenId,
+                        sector: FieldSector.STACK,
+                        fieldId: tokenId,
+                        playerId: playerId,
+                        // NOTE: color could be a numeric enum
+                        color: Object.values(Color)[tokenId],
+                    };
+                });
+        })
+    );
+
+    // TMP: for demonstration purposes only
+    const moveByOne = (tokenId: number) => {
+        const token = { ...tokens[tokenId] }; // copy token
+
+        switch (token.sector) {
+            case FieldSector.STACK:
+                token.sector = FieldSector.BOARD;
+                token.fieldId = def.startField[token.playerId];
+                break;
+
+            case FieldSector.BOARD: {
+                // TODO: you can select the current player or the token's owner
+                const lastFieldBeforeHome = (def.startField[token.playerId]
+                    + def.fieldsToHome) % def.allFields;
+
+                // TODO: this works only because we jump by 1
+                if (token.fieldId === lastFieldBeforeHome) {
+                    token.sector = FieldSector.HOME;
+                    token.fieldId = 0;
+                } else {
+                    token.fieldId = (token.fieldId + 1) % def.allFields;
+                }
+                break;
+            }
+
+            case FieldSector.HOME:
+                token.fieldId = Math.min(token.fieldId + 1, def.tokensPerPlayer - 1);
+                break;
+        }
+
+        setTokens(tokens.map((oldToken, idx) => idx === tokenId ? token : oldToken));
+    }
 
     const playingBoardProps = {
         players: [
             { name: 'Player 1', color: Color.Red },
             { name: 'Player 2', color: Color.Green },
         ],
-        tokens: [
-            {
-                id: 0,
-                sector: FieldSector.STACK,
-                fieldId: 0,
-                playerId: 0,
-                color: Color.Red,
-            },
-            {
-                id: 1,
-                sector: FieldSector.STACK,
-                fieldId: 1,
-                playerId: 0,
-                color: Color.Green,
-            },
-            {
-                id: 2,
-                sector: FieldSector.BOARD,
-                fieldId: 0,
-                playerId: 0,
-                color: Color.Blue,
-            },
-            {
-                id: 3,
-                sector: FieldSector.BOARD,
-                fieldId: 1,
-                playerId: 0,
-                color: Color.Yellow,
-            },
-            {
-                id: 4,
-                sector: FieldSector.STACK,
-                fieldId: 0,
-                playerId: 1,
-                color: Color.Red,
-            },
-            {
-                id: 5,
-                sector: FieldSector.STACK,
-                fieldId: 1,
-                playerId: 1,
-                color: Color.Green,
-            },
-            {
-                id: 6,
-                sector: FieldSector.BOARD,
-                fieldId: 6,
-                playerId: 1,
-                color: Color.Blue,
-            },
-            {
-                id: 7,
-                sector: FieldSector.HOME,
-                fieldId: 1,
-                playerId: 1,
-                color: Color.Yellow,
-            },
-        ],
-        onPress: (tokenId: number) => console.log('token pressed', tokenId)
+        tokens,
+        onPress: moveByOne,
     }
 
     return (
@@ -113,7 +111,7 @@ const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves, events }) => {
                 </Button>
                 <View style={{ width: 800, height: 800 }}>
                     <PlayingBoard
-                        boardType={BoardType.SMALL_BOARD_FOR_TWO}
+                        boardType={selectedBoard}
                         {...playingBoardProps}
                     />
                 </View>

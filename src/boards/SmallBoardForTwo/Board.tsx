@@ -33,7 +33,7 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
   const boardY = 400;
 
   // helper array with all player ids
-  const FOR_ALL_PLAYERS = [0, 1];
+  const FOR_ALL_PLAYERS = [...Array(definition.maxPlayers).keys()];
   const [ P0, P1 ] = FOR_ALL_PLAYERS;
 
   const stackData = [
