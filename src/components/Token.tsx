@@ -19,7 +19,8 @@ const Token: React.FC<Props> = ({ square, color, disabled, onPress }) => {
             onPress={onPress}
             _disabled={{ bg: 'yellow.500' }}
             alignContent="center"
-            justifyContent="center">
+            justifyContent="center"
+        >
             <Text color="white" textAlign="center">
                 {square}
             </Text>

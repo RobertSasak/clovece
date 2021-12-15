@@ -38,29 +38,29 @@ export enum FieldSector {
 }
 
 export interface PlayingBoardDefinition {
-    maxPlayers: number;
-    tokensPerPlayer: number;
-    allFields: number;
+    maxPlayers: number
+    tokensPerPlayer: number
+    allFields: number
     /** Start field id for each player. */
-    startField: number[];
+    startField: number[]
     /**
      * How many fields the player needs to go to reach home.
      * If first field is 0, the last field is this number.
      */
-    fieldsToHome: number;
+    fieldsToHome: number
 }
 
 export interface GenericPlayingBoardProps {
     players: {
-        name: string;
-        color: Color;
-    }[];
+        name: string
+        color: Color
+    }[]
     tokens: {
-        id: number;
-        sector: FieldSector;
-        fieldId: number;
-        playerId: number;
-        color: Color;
-    }[];
-    onPress: (tokenId: number) => void;
+        id: number
+        sector: FieldSector
+        fieldId: number
+        playerId: number
+        color: Color
+    }[]
+    onPress: (tokenId: number) => void
 }

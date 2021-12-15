@@ -1,4 +1,3 @@
-
 export enum BoardType {
-  SMALL_BOARD_FOR_TWO,
+    SMALL_BOARD_FOR_TWO,
 }
