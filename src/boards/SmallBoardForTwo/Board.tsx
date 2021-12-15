@@ -20,9 +20,9 @@ interface PositionAndColor {
 }
 
 interface Fields {
-    [FieldSector.STACK]: PositionAndColor[][]
-    [FieldSector.HOME]: PositionAndColor[][]
+    [FieldSector.START]: PositionAndColor[][]
     [FieldSector.BOARD]: PositionAndColor[]
+    [FieldSector.END]: PositionAndColor[][]
 }
 
 export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
@@ -42,7 +42,7 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
     ]
 
     const fields: Fields = {
-        stack: [
+        start: [
             // player 0
             [
                 { x: 40 + 1 * 55, y: 150, color: 'white' },
@@ -58,7 +58,7 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
                 { x: 520 + 7 * 55, y: 150, color: 'white' },
             ],
         ],
-        home: FOR_ALL_PLAYERS.map((playerId) => {
+        end: FOR_ALL_PLAYERS.map((playerId) => {
             return new Array(definition.tokensPerPlayer).fill(null).map(() => {
                 return {
                     x: boardX,
@@ -75,11 +75,11 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
     // calculate home field positions
     for (let i = 0; i < definition.tokensPerPlayer; i++) {
         // player 0
-        fields.home[P0][i].x -= 1 * (fieldSpace + FIELD_SIZE)
-        fields.home[P0][i].y += (3 - i) * (fieldSpace + FIELD_SIZE)
+        fields.end[P0][i].x -= 1 * (fieldSpace + FIELD_SIZE)
+        fields.end[P0][i].y += (3 - i) * (fieldSpace + FIELD_SIZE)
         // player 1
-        fields.home[P1][i].x += 4 * (fieldSpace + FIELD_SIZE)
-        fields.home[P1][i].y += i * (fieldSpace + FIELD_SIZE)
+        fields.end[P1][i].x += 4 * (fieldSpace + FIELD_SIZE)
+        fields.end[P1][i].y += i * (fieldSpace + FIELD_SIZE)
     }
 
     // update start field colors
@@ -141,12 +141,12 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
             FOR_ALL_PLAYERS.flatMap((playerId) => {
                 return [
                     renderFields(
-                        fields[FieldSector.STACK][playerId],
-                        `stack-${playerId}`,
+                        fields[FieldSector.START][playerId],
+                        `start-${playerId}`,
                     ),
                     renderFields(
-                        fields[FieldSector.HOME][playerId],
-                        `home-${playerId}`,
+                        fields[FieldSector.END][playerId],
+                        `end-${playerId}`,
                     ),
                 ]
             }),
@@ -156,11 +156,10 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
 
     const renderTokens = () => {
         return props.tokens.map((token) => {
-            token.fieldId
             const field =
                 token.sector === FieldSector.BOARD
                     ? fields[token.sector][token.fieldId]
-                    : fields[token.sector][token.playerId][token.fieldId]
+                    : fields[token.sector][+token.playerId][token.fieldId]
             return (
                 <Token
                     key={token.id}
@@ -179,8 +178,7 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
         <Svg
             height="100%"
             width="100%"
-            viewBox={`0 0 ${WHOLE_BOARD_WIDTH} ${WHOLE_BOARD_HEIGHT}`}
-        >
+            viewBox={`0 0 ${WHOLE_BOARD_WIDTH} ${WHOLE_BOARD_HEIGHT}`}>
             <Rect
                 x={WHOLE_BOARD_MARGIN / 2}
                 y={WHOLE_BOARD_MARGIN / 2}
@@ -211,8 +209,8 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
                         key={playerId}
                         x1={fields.board[lastField].x}
                         y1={fields.board[lastField].y}
-                        x2={fields.home[playerId][0].x}
-                        y2={fields.home[playerId][0].y}
+                        x2={fields.end[playerId][0].x}
+                        y2={fields.end[playerId][0].y}
                         stroke="black"
                         strokeWidth="2"
                     />

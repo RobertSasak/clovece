@@ -8,11 +8,11 @@ export enum Color {
 }
 
 export interface Token {
+    id: number
     color: Color
-    square: number | null
-    start: PlayerID | null
-    end: PlayerID | null
-    endSquare: number | null
+    playerId: string
+    sector: FieldSector
+    fieldId: number
 }
 
 export type Homes = {
@@ -32,9 +32,9 @@ export interface State {
 }
 
 export enum FieldSector {
-    STACK = 'stack',
+    START = 'start',
     BOARD = 'board',
-    HOME = 'home',
+    END = 'end',
 }
 
 export interface PlayingBoardDefinition {
@@ -55,12 +55,6 @@ export interface GenericPlayingBoardProps {
         name: string
         color: Color
     }[]
-    tokens: {
-        id: number
-        sector: FieldSector
-        fieldId: number
-        playerId: number
-        color: Color
-    }[]
+    tokens: Token[]
     onPress: (tokenId: number) => void
 }

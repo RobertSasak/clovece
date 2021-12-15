@@ -1,9 +1,9 @@
 import type { Game, Move, Ctx } from 'boardgame.io'
 import { INVALID_MOVE } from 'boardgame.io/core'
 
-import { State, Token, Color, Homes } from './types'
+import { State, Token, Color, Homes, FieldSector } from './types'
 
-const SEGMENT_SIZE = 10
+const SEGMENT_SIZE = 6
 
 export const moveTokenError = (
     G: State,
@@ -17,13 +17,19 @@ export const moveTokenError = (
     if (!token) {
         throw new Error('id is undefined')
     }
-    if (G.moves !== 6 && token.start) {
+    if (G.moves !== 6 && token.sector === FieldSector.START) {
         return 'Throw 6 on dice in order to take token from staring zone.'
     }
-    if (token.start === ctx.currentPlayer) {
+    if (token.playerId === ctx.currentPlayer) {
         return `You can only select token from your own starting zone. Your staring zone is ${ctx.playerID}.`
     }
-    if (token.start === null && G.homes[ctx.currentPlayer][token.color]) {
+    if (G.moves === 0) {
+        return 'Throw the die first to determine how many steps you can move.'
+    }
+    if (
+        token.sector !== FieldSector.START &&
+        G.homes[ctx.currentPlayer][token.color]
+    ) {
         return `You need to bring ${token.color} token from staring zone to game so that you can move with any ${token.color} tokens.`
     }
     return false
@@ -35,26 +41,23 @@ const moveToken: Move<State> = (G, ctx, id: number) => {
     }
     const token = G.tokens[id]
     // Start with new token
-    if (G.moves === 6 && token.start) {
-        token.start = null
+    if (token.sector === FieldSector.START) {
+        token.sector = FieldSector.BOARD
         const s = +ctx.currentPlayer * SEGMENT_SIZE
         const occupied = G.squares[s]
+        G.moves = 0
         G.squares[s] = id
         G.homes[ctx.currentPlayer][token.color] = false
-        token.square = s
+        token.fieldId = s
         if (occupied !== null) {
             G.kicked = occupied
         }
         // } else if () { // TODO: Move token to finish
     } else {
-        // Move token around the board
-        if (token.square === null) {
-            return new Error('This token should be on board')
-        }
-        token.square = (token.square + G.moves) % G.size
+        token.fieldId = (token.fieldId + G.moves) % G.size
+        G.moves = 0
         ctx.events?.endTurn()
     }
-    G.moves = 0
 }
 
 export const rollDieError = (G: State, _ctx: Ctx): false | string => {
@@ -77,6 +80,7 @@ const rollDie: Move<State> = (G, ctx) => {
     G.die = ctx.random.D6()
     G.moves = G.die
     if (enumerate(G, ctx).length == 0) {
+        G.moves = 0
         ctx.events?.endTurn()
     }
 }
@@ -86,7 +90,7 @@ export const selectPlayerError = (
     _ctx: Ctx,
     playerId: string,
 ): false | string => {
-    if (!playerId) {
+    if (playerId === undefined) {
         throw new Error('PlayerId is undefined')
     }
     if (G.kicked === null) {
@@ -120,7 +124,8 @@ const selectPlayer: Move<State> = (G, ctx, playerId) => {
     if (G.kicked === null) {
         return INVALID_MOVE
     }
-    G.tokens[G.kicked].start = playerId
+    G.tokens[G.kicked].sector = FieldSector.START
+    G.tokens[G.kicked].playerId = playerId
     G.kicked = null
     ctx.events?.endTurn()
 }
@@ -132,35 +137,35 @@ const game: Game<State> = {
     maxPlayers: 4,
     setup: (ctx) => {
         const tokens: Token[] = ctx.playOrder.reduce<Token[]>(
-            (prev, p) => [
+            (prev, p, i) => [
                 ...prev,
                 {
+                    id: i * 4,
                     color: Color.Red,
-                    square: null,
-                    start: p,
-                    end: null,
-                    endSquare: null,
+                    playerId: p,
+                    sector: FieldSector.START,
+                    fieldId: 0,
                 },
                 {
+                    id: i * 4 + 1,
                     color: Color.Green,
-                    square: null,
-                    start: p,
-                    end: null,
-                    endSquare: null,
+                    playerId: p,
+                    sector: FieldSector.START,
+                    fieldId: 1,
                 },
                 {
+                    id: i * 4 + 2,
                     color: Color.Blue,
-                    square: null,
-                    start: p,
-                    end: null,
-                    endSquare: null,
+                    playerId: p,
+                    sector: FieldSector.START,
+                    fieldId: 2,
                 },
                 {
+                    id: i * 4 + 3,
                     color: Color.Yellow,
-                    square: null,
-                    start: p,
-                    end: null,
-                    endSquare: null,
+                    playerId: p,
+                    sector: FieldSector.START,
+                    fieldId: 3,
                 },
             ],
             [],
