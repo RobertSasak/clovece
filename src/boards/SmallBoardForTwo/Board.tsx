@@ -1,7 +1,8 @@
 import React from 'react'
-import Svg, { Line, Rect } from 'react-native-svg'
+import Svg, { Line, Rect, G } from 'react-native-svg'
 import { Field, definition, Token } from '.'
 import { FieldSector, GenericPlayingBoardProps } from '../../types'
+import Die from '../components/Die'
 import { getColor } from './colors'
 import { Stack } from './Stack'
 
@@ -155,23 +156,26 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
     }
 
     const renderTokens = () => {
-        return props.tokens.map((token) => {
-            const field =
-                token.sector === FieldSector.BOARD
-                    ? fields[token.sector][token.fieldId]
-                    : fields[token.sector][+token.playerId][token.fieldId]
-            return (
-                <Token
-                    key={token.id}
-                    id={`token-${token.id}`}
-                    x={field.x}
-                    y={field.y}
-                    color={getColor(token.color)}
-                    size={TOKEN_SIZE}
-                    onPress={() => props.onPress(token.id)}
-                />
-            )
-        })
+        return props.tokens.map(
+            ({ id, sector, fieldId, playerId, color, disabled }) => {
+                const field =
+                    sector === FieldSector.BOARD
+                        ? fields[sector][fieldId]
+                        : fields[sector][+playerId][fieldId]
+                return (
+                    <Token
+                        key={id}
+                        id={`token-${id}`}
+                        x={field.x}
+                        y={field.y}
+                        color={getColor(color)}
+                        size={TOKEN_SIZE}
+                        disabled={disabled}
+                        onPress={() => props.onTokenPress(id)}
+                    />
+                )
+            },
+        )
     }
 
     return (
@@ -189,6 +193,7 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
                 fill="white"
             />
             {renderStacks()}
+
             {/* lines under board fields */}
             <Rect
                 x={boardX}
@@ -218,6 +223,13 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
             })}
             {renderAllFields()}
             {renderTokens()}
+            <G x={WHOLE_BOARD_WIDTH / 2 - 100} y={WHOLE_BOARD_HEIGHT / 2 - 30}>
+                <Die
+                    value={props.die}
+                    disabled={props.dieDisabled}
+                    onPress={props.onDiePress}
+                />
+            </G>
         </Svg>
     )
 }

@@ -7,23 +7,34 @@ interface TokenProps {
     y: number
     size: number
     color: string
+    disabled: boolean
     onPress?: () => void
 }
 
-export const Token: React.FC<TokenProps> = (props) => {
+export const Token: React.FC<TokenProps> = ({
+    id,
+    x,
+    y,
+    size,
+    color,
+    disabled,
+    onPress,
+}) => {
     return (
         <Rect
-            id={props.id}
-            x={props.x - props.size / 2}
-            y={props.y - props.size / 2}
-            width={props.size}
-            height={props.size}
+            id={id}
+            x={x - size / 2}
+            y={y - size / 2}
+            width={size}
+            height={size}
             stroke="black"
             strokeWidth="2"
-            fill={props.color}
+            opacity={disabled ? 0.5 : 1}
+            fill={color}
             // TODO: onPress vs onClick
             // https://github.com/react-native-svg/react-native-svg/issues/1483
-            onClick={props.onPress}
+            onClick={onPress}
+            onPress={onPress}
         />
     )
 }

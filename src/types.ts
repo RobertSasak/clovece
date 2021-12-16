@@ -15,6 +15,10 @@ export interface Token {
     fieldId: number
 }
 
+export interface TokenUI extends Token {
+    disabled: boolean
+}
+
 export type Homes = {
     [key: PlayerID]: {
         [key in Color]: boolean
@@ -52,9 +56,14 @@ export interface PlayingBoardDefinition {
 
 export interface GenericPlayingBoardProps {
     players: {
+        id: string
         name: string
         color: Color
     }[]
-    tokens: Token[]
-    onPress: (tokenId: number) => void
+    currentPlayer: string
+    die: number
+    dieDisabled: boolean
+    tokens: TokenUI[]
+    onTokenPress: (tokenId: number) => void
+    onDiePress: () => void
 }

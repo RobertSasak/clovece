@@ -10,10 +10,12 @@ import { BoardType } from './boards/types'
 
 const players = [
     {
+        id: '0',
         name: 'Player 1',
         color: Color.Red,
     },
     {
+        id: '1',
         name: 'Player 2',
         color: Color.Green,
     },
@@ -23,44 +25,26 @@ const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves, events }) => {
     const { moveToken, rollDie } = moves
 
     const selectedBoard = BoardType.SMALL_BOARD_FOR_TWO
+    const tokens = G.tokens.map((t) => ({
+        ...t,
+        disabled: !!moveTokenError(G, ctx, t.id),
+    }))
 
     return (
-        <>
-            <VStack safeArea>
-                <VStack>
-                    <Text>Players: {ctx.numPlayers}</Text>
-                    <Text>currentPlayer: {ctx.currentPlayer}</Text>
-                    <Text>Die: {G.die ? G.die : 'null'}</Text>
-                </VStack>
-                <HStack>
-                    {G.tokens.map(({ color, fieldId }, id) => (
-                        <Token
-                            id={id}
-                            key={id}
-                            color={color}
-                            fieldId={fieldId}
-                            disabled={!!moveTokenError(G, ctx, id)}
-                            onPress={() => moveToken(id)}
-                        />
-                    ))}
-                </HStack>
-                <Button
-                    m="2"
-                    _disabled={{ bg: 'gray.600' }}
-                    isDisabled={!!rollDieError(G, ctx)}
-                    onPress={() => rollDie()}>
-                    Roll die
-                </Button>
-                <View style={{ width: 800, height: 800 }}>
-                    <PlayingBoard
-                        boardType={selectedBoard}
-                        players={players}
-                        onPress={moveToken}
-                        tokens={G.tokens}
-                    />
-                </View>
-            </VStack>
-        </>
+        <VStack safeArea>
+            <View style={{ width: 800, height: 800 }}>
+                <PlayingBoard
+                    boardType={selectedBoard}
+                    players={players}
+                    currentPlayer={ctx.currentPlayer}
+                    die={G.die ?? 6}
+                    onTokenPress={moveToken}
+                    onDiePress={rollDie}
+                    dieDisabled={!!rollDieError(G, ctx)}
+                    tokens={tokens}
+                />
+            </View>
+        </VStack>
     )
 }
 
