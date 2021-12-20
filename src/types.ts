@@ -8,11 +8,15 @@ export enum Color {
 }
 
 export interface Token {
+    id: number
     color: Color
-    square: number | null
-    start: PlayerID | null
-    end: PlayerID | null
-    endSquare: number | null
+    playerId: string
+    sector: FieldSector
+    fieldId: number
+}
+
+export interface TokenUI extends Token {
+    disabled: boolean
 }
 
 export type Homes = {
@@ -29,4 +33,37 @@ export interface State {
     moves: number
     kicked: number | null
     homes: Homes
+}
+
+export enum FieldSector {
+    START = 'start',
+    BOARD = 'board',
+    END = 'end',
+}
+
+export interface PlayingBoardDefinition {
+    maxPlayers: number
+    tokensPerPlayer: number
+    allFields: number
+    /** Start field id for each player. */
+    startField: number[]
+    /**
+     * How many fields the player needs to go to reach home.
+     * If first field is 0, the last field is this number.
+     */
+    fieldsToHome: number
+}
+
+export interface GenericPlayingBoardProps {
+    players: {
+        id: string
+        name: string
+        color: Color
+    }[]
+    currentPlayer: string
+    die: number
+    dieDisabled: boolean
+    tokens: TokenUI[]
+    onTokenPress: (tokenId: number) => void
+    onDiePress: () => void
 }

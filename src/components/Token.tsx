@@ -4,12 +4,12 @@ import { Pressable, Text } from 'native-base'
 interface Props {
     id: number
     color: string
-    square: number | null
+    fieldId: number
     disabled: boolean
     onPress: () => void
 }
 
-const Token: React.FC<Props> = ({ square, color, disabled, onPress }) => {
+const Token: React.FC<Props> = ({ fieldId, color, disabled, onPress }) => {
     return (
         <Pressable
             rounded="25px"
@@ -21,7 +21,7 @@ const Token: React.FC<Props> = ({ square, color, disabled, onPress }) => {
             alignContent="center"
             justifyContent="center">
             <Text color="white" textAlign="center">
-                {square}
+                {fieldId}
             </Text>
         </Pressable>
     )
