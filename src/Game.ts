@@ -3,7 +3,7 @@ import { INVALID_MOVE } from 'boardgame.io/core'
 
 import { State, Token, Color, Homes, FieldSector } from './types'
 
-const SEGMENT_SIZE = 6
+const SEGMENT_SIZE = 10
 
 export const moveTokenError = (
     G: State,
@@ -20,8 +20,17 @@ export const moveTokenError = (
     if (G.moves !== 6 && token.sector === FieldSector.START) {
         return 'Throw 6 on dice in order to take token from staring zone.'
     }
-    if (token.playerId === ctx.currentPlayer) {
-        return `You can only select token from your own starting zone. Your staring zone is ${ctx.playerID}.`
+    if (
+        token.sector === FieldSector.START &&
+        token.playerId !== ctx.currentPlayer
+    ) {
+        return `You can only select token from your own starting zone.`
+    }
+    if (
+        token.sector === FieldSector.END &&
+        token.playerId !== ctx.currentPlayer
+    ) {
+        return `You can only move tokens in own endzone.`
     }
     if (G.moves === 0) {
         return 'Throw the die first to determine how many steps you can move.'
@@ -42,7 +51,7 @@ const moveToken: Move<State> = (G, ctx, id: number) => {
     const token = G.tokens[id]
     // Start with new token
     if (token.sector === FieldSector.START) {
-        token.sector = FieldSector.BOARD
+        token.sector = FieldSector.LAP
         const s = +ctx.currentPlayer * SEGMENT_SIZE
         const occupied = G.squares[s]
         G.moves = 0
@@ -55,6 +64,7 @@ const moveToken: Move<State> = (G, ctx, id: number) => {
         // } else if () { // TODO: Move token to finish
     } else {
         token.fieldId = (token.fieldId + G.moves) % G.size
+        G.squares[token.fieldId] = null
         G.moves = 0
         ctx.events?.endTurn()
     }
@@ -170,7 +180,7 @@ const game: Game<State> = {
             ],
             [],
         )
-        const size = ctx.numPlayers * SEGMENT_SIZE
+        const size = 4 * SEGMENT_SIZE
         let homes: Homes = {}
         ctx.playOrder.map((p) => {
             homes[p] = {

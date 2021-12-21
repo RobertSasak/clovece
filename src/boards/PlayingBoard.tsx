@@ -1,6 +1,7 @@
 import React from 'react'
 import { GenericPlayingBoardProps } from '../types'
-import { Board } from './SmallBoardForTwo'
+import Classic from './Classic/Classis'
+import { Board as SmallBoardForTwo } from './SmallBoardForTwo'
 import { BoardType } from './types'
 
 interface PlayingBoardOwnProps {
@@ -17,7 +18,10 @@ export const PlayingBoard: React.FC<PlayingBoardProps> = (props) => {
 
     switch (boardType) {
         case BoardType.SMALL_BOARD_FOR_TWO:
-            return <Board {...boardProps} />
+            return <SmallBoardForTwo {...boardProps} />
+
+        case BoardType.CLASSIC:
+            return <Classic {...boardProps} />
 
         default:
             console.warn('No such board!')

@@ -22,7 +22,7 @@ interface PositionAndColor {
 
 interface Fields {
     [FieldSector.START]: PositionAndColor[][]
-    [FieldSector.BOARD]: PositionAndColor[]
+    [FieldSector.LAP]: PositionAndColor[]
     [FieldSector.END]: PositionAndColor[][]
 }
 
@@ -151,7 +151,7 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
                     ),
                 ]
             }),
-            renderFields(fields[FieldSector.BOARD], 'fields'),
+            renderFields(fields[FieldSector.LAP], 'fields'),
         ]
     }
 
@@ -159,7 +159,7 @@ export const Board: React.FC<GenericPlayingBoardProps> = (props) => {
         return props.tokens.map(
             ({ id, sector, fieldId, playerId, color, disabled }) => {
                 const field =
-                    sector === FieldSector.BOARD
+                    sector === FieldSector.LAP
                         ? fields[sector][fieldId]
                         : fields[sector][+playerId][fieldId]
                 return (

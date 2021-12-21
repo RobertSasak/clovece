@@ -16,7 +16,7 @@ export interface Token {
 }
 
 export interface TokenUI extends Token {
-    disabled: boolean
+    error: string | false
 }
 
 export type Homes = {
@@ -37,7 +37,7 @@ export interface State {
 
 export enum FieldSector {
     START = 'start',
-    BOARD = 'board',
+    LAP = 'lap',
     END = 'end',
 }
 
@@ -66,4 +66,9 @@ export interface GenericPlayingBoardProps {
     tokens: TokenUI[]
     onTokenPress: (tokenId: number) => void
     onDiePress: () => void
+}
+
+export interface Point {
+    x: number
+    y: number
 }

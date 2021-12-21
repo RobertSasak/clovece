@@ -2,14 +2,23 @@ import React from 'react'
 import { Rect, G, Circle } from 'react-native-svg'
 
 interface Props {
+    x: number
+    y: number
+    size: number
     value: number
     disabled: boolean
     onPress: () => void
 }
 
-const Die: React.FC<Props> = ({ value, disabled, onPress }) => {
+const Die: React.FC<Props> = ({ x, y, size, value, disabled, onPress }) => {
     return (
-        <G opacity={disabled ? 0.5 : 1} onPress={onPress} onClick={onPress}>
+        <G
+            x={x}
+            y={y}
+            scale={size / 100}
+            opacity={disabled ? 0.5 : 1}
+            onPress={onPress}
+            onClick={onPress}>
             <Rect
                 width={200}
                 height={200}

@@ -6,6 +6,8 @@ export function getBoardDefinition(board: BoardType): PlayingBoardDefinition {
     switch (board) {
         case BoardType.SMALL_BOARD_FOR_TWO:
             return SmallBoardForTwo
+        case BoardType.CLASSIC:
+            return SmallBoardForTwo
 
         default:
             throw new Error('No such board!')
