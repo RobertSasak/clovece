@@ -1,5 +1,5 @@
 import type { Game, Move, Ctx } from 'boardgame.io'
-import { INVALID_MOVE } from 'boardgame.io/core'
+import { GameMethod, INVALID_MOVE } from 'boardgame.io/core'
 
 import { State, Token, Color, Homes, FieldSector } from './types'
 
@@ -49,10 +49,9 @@ const moveToken: Move<State> = (G, ctx, id: number) => {
         return INVALID_MOVE
     }
     const token = G.tokens[id]
-    // Start with new token
     if (token.sector === FieldSector.START) {
         token.sector = FieldSector.LAP
-        const s = +ctx.currentPlayer * SEGMENT_SIZE
+        const s = ctx.playOrderPos * SEGMENT_SIZE
         const occupied = G.squares[s]
         G.moves = 0
         G.squares[s] = id
@@ -61,11 +60,33 @@ const moveToken: Move<State> = (G, ctx, id: number) => {
         if (occupied !== null) {
             G.kicked = occupied
         }
-        // } else if () { // TODO: Move token to finish
+    } else if (token.sector === FieldSector.END) {
+        G.ends[ctx.currentPlayer][token.fieldId] = false
+        token.fieldId = token.fieldId + G.moves
+        G.ends[ctx.currentPlayer][token.fieldId] = true
     } else {
-        token.fieldId = (token.fieldId + G.moves) % G.size
+        const exitSquare =
+            (ctx.playOrderPos * SEGMENT_SIZE - 1 + G.size) % G.size
         G.squares[token.fieldId] = null
-        G.moves = 0
+        let newFieldId = token.fieldId
+        while (G.moves > 0) {
+            G.moves--
+            newFieldId = (newFieldId + 1) % G.size
+            if (newFieldId == exitSquare) {
+                break
+            }
+        }
+        if (newFieldId == exitSquare && G.moves > 0) {
+            token.sector = FieldSector.END
+            token.fieldId = G.moves - 1
+            token.playerId = ctx.currentPlayer
+            G.ends[ctx.currentPlayer][token.fieldId] = true
+            G.finished[ctx.currentPlayer]++
+        } else {
+            token.fieldId = newFieldId
+        }
+    }
+    if (G.die !== 6) {
         ctx.events?.endTurn()
     }
 }
@@ -140,6 +161,14 @@ const selectPlayer: Move<State> = (G, ctx, playerId) => {
     ctx.events?.endTurn()
 }
 
+const endIf = (G: State, ctx: Ctx) => {
+    for (let i = 0; i < ctx.playOrder.length; i++) {
+        if (G.finished[ctx.playOrder[i]] === 4) {
+            return { winner: ctx.playOrder[i] }
+        }
+    }
+}
+
 const game: Game<State> = {
     name: 'Clovece',
     seed: 0,
@@ -195,9 +224,23 @@ const game: Game<State> = {
             tokens,
             squares: new Array(size).fill(null),
             kicked: null,
-            homes,
             die: null,
             moves: 0,
+            finished: ctx.playOrder.reduce(
+                (p, c) => ({
+                    ...p,
+                    [c]: 0,
+                }),
+                {},
+            ),
+            homes,
+            ends: ctx.playOrder.reduce(
+                (p, c) => ({
+                    ...p,
+                    [c]: [false, false, false, false],
+                }),
+                {},
+            ),
         }
     },
     moves: {
@@ -210,6 +253,7 @@ const game: Game<State> = {
             G.moves = 0
         },
     },
+    endIf,
     ai: {
         enumerate,
     },

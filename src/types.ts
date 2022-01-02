@@ -25,6 +25,10 @@ export type Homes = {
     }
 }
 
+export type Ends = {
+    [key: PlayerID]: [boolean, boolean, boolean, boolean]
+}
+
 export interface State {
     size: number
     tokens: Token[]
@@ -33,6 +37,10 @@ export interface State {
     moves: number
     kicked: number | null
     homes: Homes
+    ends: Ends
+    finished: {
+        [key: PlayerID]: number
+    }
 }
 
 export enum FieldSector {
