@@ -19,14 +19,18 @@ export interface TokenUI extends Token {
     error: string | false
 }
 
-export type Homes = {
+export type Players = {
     [key: PlayerID]: {
-        [key in Color]: boolean
+        name: string
+        start: {
+            [color in Color]: boolean
+        }
+        end: {
+            [color in Color]: boolean
+        }
+        finish: [boolean, boolean, boolean, boolean]
+        finished: number
     }
-}
-
-export type Ends = {
-    [key: PlayerID]: [boolean, boolean, boolean, boolean]
 }
 
 export interface State {
@@ -36,11 +40,7 @@ export interface State {
     die: number | null
     moves: number
     kicked: number | null
-    homes: Homes
-    ends: Ends
-    finished: {
-        [key: PlayerID]: number
-    }
+    players: Players
 }
 
 export enum FieldSector {

@@ -1,7 +1,7 @@
 import type { Game, Move, Ctx } from 'boardgame.io'
 import { GameMethod, INVALID_MOVE } from 'boardgame.io/core'
 
-import { State, Token, Color, Homes, FieldSector } from './types'
+import { State, Token, Color, FieldSector, Players } from './types'
 
 const SEGMENT_SIZE = 10
 
@@ -37,7 +37,7 @@ export const moveTokenError = (
     }
     if (
         token.sector !== FieldSector.START &&
-        G.homes[ctx.currentPlayer][token.color]
+        G.players[ctx.currentPlayer].start[token.color]
     ) {
         return `You need to bring ${token.color} token from staring zone to game so that you can move with any ${token.color} tokens.`
     }
@@ -55,15 +55,15 @@ const moveToken: Move<State> = (G, ctx, id: number) => {
         const occupied = G.squares[s]
         G.moves = 0
         G.squares[s] = id
-        G.homes[ctx.currentPlayer][token.color] = false
+        G.players[ctx.currentPlayer].start[token.color] = false
         token.fieldId = s
         if (occupied !== null) {
             G.kicked = occupied
         }
     } else if (token.sector === FieldSector.END) {
-        G.ends[ctx.currentPlayer][token.fieldId] = false
+        G.players[ctx.currentPlayer].finish[token.fieldId] = false
         token.fieldId = token.fieldId + G.moves
-        G.ends[ctx.currentPlayer][token.fieldId] = true
+        G.players[ctx.currentPlayer].finish[token.fieldId] = true
     } else {
         const exitSquare =
             (ctx.playOrderPos * SEGMENT_SIZE - 1 + G.size) % G.size
@@ -80,8 +80,8 @@ const moveToken: Move<State> = (G, ctx, id: number) => {
             token.sector = FieldSector.END
             token.fieldId = G.moves - 1
             token.playerId = ctx.currentPlayer
-            G.ends[ctx.currentPlayer][token.fieldId] = true
-            G.finished[ctx.currentPlayer]++
+            G.players[ctx.currentPlayer].finish[token.fieldId] = true
+            G.players[ctx.currentPlayer].finished++
         } else {
             token.fieldId = newFieldId
         }
@@ -163,7 +163,7 @@ const selectPlayer: Move<State> = (G, ctx, playerId) => {
 
 const endIf = (G: State, ctx: Ctx) => {
     for (let i = 0; i < ctx.playOrder.length; i++) {
-        if (G.finished[ctx.playOrder[i]] === 4) {
+        if (G.players[ctx.playOrder[i]].finished === 4) {
             return { winner: ctx.playOrder[i] }
         }
     }
@@ -210,15 +210,30 @@ const game: Game<State> = {
             [],
         )
         const size = 4 * SEGMENT_SIZE
-        let homes: Homes = {}
-        ctx.playOrder.map((p) => {
-            homes[p] = {
-                red: true,
-                green: true,
-                blue: true,
-                yellow: true,
-            }
-        })
+        const players: Players = ctx.playOrder.reduce(
+            (p, v) => ({
+                ...p,
+                [v]: {
+                    name: '',
+                    start: {
+                        red: true,
+                        green: true,
+                        blue: true,
+                        yellow: true,
+                    },
+                    end: {
+                        red: true,
+                        green: true,
+                        blue: true,
+                        yellow: true,
+                    },
+                    finish: [false, false, false, false],
+                    finished: 0,
+                },
+            }),
+            {},
+        )
+
         return {
             size,
             tokens,
@@ -226,21 +241,7 @@ const game: Game<State> = {
             kicked: null,
             die: null,
             moves: 0,
-            finished: ctx.playOrder.reduce(
-                (p, c) => ({
-                    ...p,
-                    [c]: 0,
-                }),
-                {},
-            ),
-            homes,
-            ends: ctx.playOrder.reduce(
-                (p, c) => ({
-                    ...p,
-                    [c]: [false, false, false, false],
-                }),
-                {},
-            ),
+            players,
         }
     },
     moves: {
