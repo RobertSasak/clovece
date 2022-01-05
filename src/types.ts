@@ -70,7 +70,7 @@ export interface GenericPlayingBoardProps {
     }[]
     currentPlayer: string
     die: number
-    dieDisabled: boolean
+    dieError: string | false
     tokens: TokenUI[]
     onTokenPress: (tokenId: number) => void
     onDiePress: () => void

@@ -83,7 +83,7 @@ const squares: Squares = {
 
 const Classic = ({
     die,
-    dieDisabled,
+    dieError,
     onDiePress,
     tokens,
     onTokenPress,
@@ -137,8 +137,14 @@ const Classic = ({
                         y={HEIGHT / 2 - DIE_SIZE}
                         size={DIE_SIZE}
                         value={die}
-                        disabled={dieDisabled}
-                        onPress={onDiePress}
+                        disabled={!!dieError}
+                        onPress={() => {
+                            if (dieError) {
+                                toast.show({ title: dieError })
+                            } else {
+                                onDiePress()
+                            }
+                        }}
                     />
                     {tokens.map(
                         ({ id, sector, fieldId, playerId, color, error }) => {

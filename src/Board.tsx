@@ -2,9 +2,10 @@ import React from 'react'
 import type { BoardProps } from 'boardgame.io/react'
 
 import { Color, State } from './types'
-import { moveTokenError, rollDieError } from './Game'
 import { PlayingBoard } from './boards/PlayingBoard'
 import { BoardType } from './boards/types'
+import { rollError } from './moves/roll'
+import { moveError } from './moves/move'
 
 const players = [
     {
@@ -20,12 +21,12 @@ const players = [
 ]
 
 const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves, events }) => {
-    const { moveToken, rollDie } = moves
+    const { move, roll } = moves
 
     const selectedBoard = BoardType.CLASSIC
     const tokens = G.tokens.map((t) => ({
         ...t,
-        error: moveTokenError(G, ctx, t.id),
+        error: moveError(G, ctx, t.id),
     }))
 
     return (
@@ -34,9 +35,9 @@ const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves, events }) => {
             players={players}
             currentPlayer={ctx.currentPlayer}
             die={G.die ?? 6}
-            onTokenPress={moveToken}
-            onDiePress={rollDie}
-            dieDisabled={!!rollDieError(G, ctx)}
+            onTokenPress={move}
+            onDiePress={roll}
+            dieError={rollError(G, ctx)}
             tokens={tokens}
         />
     )
