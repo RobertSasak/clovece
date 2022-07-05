@@ -17,7 +17,7 @@ const WIDTH = 1000
 const HEIGHT = 1000
 const START = 350
 const STEP = 90
-const DIE_SIZE = 50
+const DIE_SIZE = 100
 const TOKEN_SIZE = 30
 const SQUARE_ZERO = {
     x: -40,
@@ -133,8 +133,8 @@ const Classic = ({
                     ))}
                     <Lap data={squares.lap} />
                     <Die
-                        x={WIDTH / 2 - DIE_SIZE}
-                        y={HEIGHT / 2 - DIE_SIZE}
+                        x={WIDTH / 2}
+                        y={HEIGHT / 2}
                         size={DIE_SIZE}
                         value={die}
                         disabled={!!dieError}
