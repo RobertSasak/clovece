@@ -8,7 +8,7 @@ import { State } from '../types'
 export default (G: State, ctx: Ctx) => {
     const moves = []
     if (!rollError(G, ctx)) {
-        moves.push({ move: 'rollDie' })
+        moves.push({ move: 'roll', args: [] })
     }
     for (let i = 0; i < G.tokens.length; i++) {
         if (!moveError(G, ctx, i)) {
