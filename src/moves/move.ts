@@ -55,7 +55,9 @@ export const move: Move<State> = (G, ctx, id: number) => {
     const token = G.tokens[id]
     if (token.sector === FieldSector.START) {
         token.sector = FieldSector.LAP
-        const s = ctx.playOrderPos * SEGMENT_SIZE
+        const s = [0, 2 * SEGMENT_SIZE, 1 * SEGMENT_SIZE, 4 * SEGMENT_SIZE][
+            ctx.playOrderPos
+        ]
         const occupied = G.squares[s]
         G.moves = 0
         G.squares[s] = id

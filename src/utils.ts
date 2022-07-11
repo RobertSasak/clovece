@@ -18,6 +18,20 @@ export const stepper = (
             x -= stepSize
         } else if (d === 'R') {
             x += stepSize
+        } else if (d === '↘') {
+            x += stepSize
+            y += stepSize
+        } else if (d === '↖') {
+            x -= stepSize
+            y -= stepSize
+        } else if (d === '↙') {
+            x -= stepSize
+            y += stepSize
+        } else if (d === '↗') {
+            x += stepSize
+            y -= stepSize
+        } else {
+            throw new Error(`Unknown direction "${d}"`)
         }
         if (skipFirst) {
             return { x, y }

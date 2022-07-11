@@ -20,7 +20,8 @@ const Lap = ({ data }: Props) => {
                         )
                         .join('') + 'Z'
                 }
-                stroke="red"
+                stroke="#333"
+                strokeWidth="30"
                 fill="transparent"
             />
             {data.map(({ x, y }, i) => (

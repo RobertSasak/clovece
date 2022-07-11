@@ -12,8 +12,8 @@ const Square = ({ x, y }: Props) => {
             cy={y}
             r={30}
             fill="white"
-            stroke="gray"
-            strokeWidth={1}
+            stroke="#333"
+            strokeWidth={3}
         />
     )
 }

@@ -1,7 +1,7 @@
-import { Box, useToast, VStack } from 'native-base'
 import React from 'react'
 import { useWindowDimensions } from 'react-native'
-import Svg, { Rect } from 'react-native-svg'
+import { Box, useToast, VStack } from 'native-base'
+import Svg, { Rect, G } from 'react-native-svg'
 
 import { FieldSector, GenericPlayingBoardProps, Point } from '../../types'
 import { stepper } from '../../utils'
@@ -24,7 +24,13 @@ const SQUARE_ZERO = {
     y: 500 - STEP,
 }
 
-const playerBox = stepper({ x: 0, y: 0 }, 'RDL', WIDTH - START, false)
+const playerBox = stepper(
+    { x: START / 2, y: START / 2 },
+    '↘L↗',
+    WIDTH - START,
+    false,
+)
+const diePosition = stepper({ x: 300, y: 300 }, '↘U↙', 1000 - 2 * 300, false)
 
 interface Squares {
     [FieldSector.START]: Point[][]
@@ -46,6 +52,12 @@ const start = [
         false,
     ),
     stepper(
+        { x: WIDTH - START / 2 - STEP / 2, y: HEIGHT - START / 2 - STEP / 2 },
+        'RDLU',
+        STEP,
+        false,
+    ),
+    stepper(
         { x: WIDTH - START / 2 - STEP / 2, y: START / 2 - STEP / 2 },
         'RDLU',
         STEP,
@@ -57,21 +69,14 @@ const start = [
         STEP,
         false,
     ),
-    stepper(
-        { x: WIDTH - START / 2 - STEP / 2, y: HEIGHT - START / 2 - STEP / 2 },
-        'RDLU',
-        STEP,
-        false,
-    ),
 ]
 
-const starts = [0, 10, 20, 40]
-const exits = [39, 9, 19, 29]
+const exits = [39, 19, 9, 29]
 
 const end = [
     stepper(lap[39], 'RRRR', STEP),
-    stepper(lap[9], 'DDDD', STEP),
     stepper(lap[19], 'LLLL', STEP),
+    stepper(lap[9], 'DDDD', STEP),
     stepper(lap[29], 'UUUU', STEP),
 ]
 
@@ -100,31 +105,46 @@ const Classic = ({
                     height="100%"
                     width="100%"
                     viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-                    fill="white"
                     preserveAspectRatio="xMinYMin slice">
-                    <Rect width={START} height={START} fill="yellow" />
+                    <Rect width="1000" height="1000" fill="#f5d9a1" />
+                    <Rect
+                        x="10"
+                        y="10"
+                        width="980"
+                        height="980"
+                        strokeWidth="3"
+                        stroke="black"
+                        fill="transparent"
+                    />
+                    <Rect
+                        width="1000"
+                        height="1000"
+                        strokeWidth="10"
+                        stroke="#bb3630"
+                        fill="transparent"
+                    />
                     {players.map((p, i) => (
                         <React.Fragment key={i}>
-                            <Rect
-                                width={START}
-                                height={START}
-                                {...playerBox[i]}
-                                fill={
-                                    p.id === currentPlayer
-                                        ? 'yellow'
-                                        : 'trasparent'
-                                }
-                            />
+                            <G {...playerBox[i]}>
+                                <Rect
+                                    width={START / 2}
+                                    height={START / 2}
+                                    x={-START / 4}
+                                    y={-START / 4}
+                                    fill={
+                                        p.id === currentPlayer
+                                            ? 'yellow'
+                                            : 'transparent'
+                                    }
+                                    stroke="#333"
+                                    strokeWidth={p.id === currentPlayer ? 4 : 0}
+                                    rx="30"
+                                />
+                            </G>
                             <Road
                                 data={[
                                     squares.lap[exits[i]],
                                     squares.end[i][0],
-                                ]}
-                            />
-                            <Road
-                                data={[
-                                    squares.start[i][0],
-                                    squares.lap[starts[i]],
                                 ]}
                             />
                             <Start data={squares.start[i]} />
@@ -133,6 +153,8 @@ const Classic = ({
                     ))}
                     <Lap data={squares.lap} />
                     <Die
+                        // x={diePosition[+currentPlayer].x}
+                        // y={diePosition[+currentPlayer].y}
                         x={WIDTH / 2}
                         y={HEIGHT / 2}
                         size={DIE_SIZE}
@@ -146,6 +168,25 @@ const Classic = ({
                             }
                         }}
                     />
+                    {/* {players.map(
+                        (p, i) =>
+                            currentPlayer === p.id && (
+                                <Die
+                                    x={diePosition[i].x}
+                                    y={diePosition[i].y}
+                                    size={DIE_SIZE}
+                                    value={die}
+                                    disabled={!!dieError}
+                                    onPress={() => {
+                                        if (dieError) {
+                                            toast.show({ title: dieError })
+                                        } else {
+                                            onDiePress()
+                                        }
+                                    }}
+                                />
+                            ),
+                    )} */}
                     {tokens.map(
                         ({ id, sector, fieldId, playerId, color, error }) => {
                             const field =
@@ -159,13 +200,12 @@ const Classic = ({
                                     y={field.y}
                                     color={getColor(color)}
                                     size={TOKEN_SIZE}
-                                    error={error}
+                                    disabled={!!error}
                                     onPress={() => {
                                         if (error) {
                                             toast.show({
                                                 title: error,
                                             })
-                                            console.log(error)
                                         } else {
                                             onTokenPress(id)
                                         }

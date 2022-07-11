@@ -1,4 +1,4 @@
-import type { Game, Ctx } from 'boardgame.io'
+import type { Game } from 'boardgame.io'
 
 import enumerate from './helpers/enumerate'
 import endIf from './helpers/endIf'
@@ -6,8 +6,7 @@ import setup from './helpers/setup'
 import { move } from './moves/move'
 import { roll } from './moves/roll'
 import { select } from './moves/select'
-import { SEGMENT_SIZE } from './constants'
-import { State, Token, Color, FieldSector, Players } from './types'
+import { State } from './types'
 
 const game: Game<State> = {
     name: 'Clovece',

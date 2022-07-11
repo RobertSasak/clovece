@@ -11,7 +11,7 @@ interface Props {
 const End = ({ data }: Props) => {
     return (
         <>
-            <Road data={data} stroke="red" />
+            <Road data={data} stroke="#333" strokeWidth={30} />
             {data.map(({ x, y }, i) => (
                 <Square key={i} x={x} y={y} />
             ))}

@@ -16,7 +16,8 @@ const Road = ({ data, closed, ...rest }: LineProps) => {
                     .join('') + (closed ? 'Z' : '')
             }
             fill="transparent"
-            stroke="red"
+            stroke="#333"
+            strokeWidth={30}
             {...rest}
         />
     )
