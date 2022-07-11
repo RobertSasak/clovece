@@ -6,7 +6,7 @@ import { selectError } from '../moves/select'
 import { State } from '../types'
 
 export default (G: State, ctx: Ctx) => {
-    let moves = []
+    const moves = []
     if (!rollError(G, ctx)) {
         moves.push({ move: 'rollDie' })
     }

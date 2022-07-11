@@ -30,7 +30,6 @@ const playerBox = stepper(
     WIDTH - START,
     false,
 )
-const diePosition = stepper({ x: 300, y: 300 }, '↘U↙', 1000 - 2 * 300, false)
 
 interface Squares {
     [FieldSector.START]: Point[][]

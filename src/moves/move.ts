@@ -19,13 +19,13 @@ export const moveError = (G: State, ctx: Ctx, id: number): false | string => {
         token.sector === FieldSector.START &&
         token.playerId !== ctx.currentPlayer
     ) {
-        return `You can only select token from your own starting zone.`
+        return 'You can only select token from your own starting zone.'
     }
     if (
         token.sector === FieldSector.END &&
         token.playerId !== ctx.currentPlayer
     ) {
-        return `You can only move tokens in own endzone.`
+        return 'You can only move tokens in own endzone.'
     }
     if (G.moves === 0) {
         return 'Throw the die first to determine how many steps you can move.'
@@ -34,16 +34,16 @@ export const moveError = (G: State, ctx: Ctx, id: number): false | string => {
         token.sector !== FieldSector.START &&
         G.players[ctx.currentPlayer].start[token.color]
     ) {
-        return `You need to bring ${token.color} token from staring zone to game so that you can move with any ${token.color} tokens.`
+        return 'You need to bring ${token.color} token from staring zone to game so that you can move with any ${token.color} tokens.'
     }
     if (
         token.sector === FieldSector.LAP &&
         G.players[ctx.currentPlayer].end[token.color]
     ) {
-        return `You cannot move this token. Token of this color is already in your endzone.`
+        return 'You cannot move this token. Token of this color is already in your endzone.'
     }
     if (token.sector === FieldSector.END && token.fieldId + G.moves > 3) {
-        return `You cannot move this token. There is not enough squares to move.`
+        return 'You cannot move this token. There is not enough squares to move.'
     }
     return false
 }

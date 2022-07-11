@@ -20,7 +20,7 @@ const players = [
     },
 ]
 
-const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves, events }) => {
+const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves }) => {
     const { move, roll } = moves
 
     const selectedBoard = BoardType.CLASSIC

@@ -8,7 +8,7 @@ interface TokenProps {
     size: number
     color: string
     disabled: boolean
-    onPress?: () => void
+    onPress: () => void
 }
 
 const AG = Animated.createAnimatedComponent(G)
@@ -20,7 +20,7 @@ export const Token: React.FC<TokenProps> = ({
     size,
     color,
     disabled,
-    onPress = () => {},
+    onPress,
 }) => {
     const xy = useRef(new Animated.ValueXY({ x, y })).current
     const animation = useRef(new Animated.Value(0)).current

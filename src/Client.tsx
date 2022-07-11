@@ -11,7 +11,9 @@ const client: typeof ClientReact =
 const Client = client({
     game: Game,
     board: Board,
-    debug: Platform.OS === 'web',
+    debug: {
+        collapseOnLoad: true,
+    },
     numPlayers: 2,
 })
 

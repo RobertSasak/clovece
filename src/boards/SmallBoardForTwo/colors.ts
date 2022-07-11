@@ -1,6 +1,6 @@
 import { Color } from '../../types'
 
-export function getColor(playerColor: Color, light: boolean = false) {
+export function getColor(playerColor: Color, light = false) {
     switch (playerColor) {
         case Color.Red:
             return light ? '#ff8080' : '#bf202f'

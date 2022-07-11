@@ -4,9 +4,10 @@ import { INVALID_MOVE } from 'boardgame.io/core'
 import enumerate from '../helpers/enumerate'
 import { State } from '../types'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const rollError = (G: State, _ctx: Ctx): false | string => {
     if (G.moves !== 0) {
-        return `Finish your move before before rolling die.`
+        return 'Finish your move before before rolling die.'
     }
     if (G.kicked !== null) {
         return 'Select which player gets kicked out token before rolling die again.'
