@@ -1,11 +1,13 @@
 import React from 'react'
 import { Heading, Button, ScrollView, VStack, Text } from 'native-base'
 import { useStatePersist, syncStorage } from 'use-state-persist'
-import PlayerInput from './components/PlayerInput'
+
+import PlayerInput from '../components/PlayerInput'
+import { RootStackScreenProps } from '../navigation/types'
 
 syncStorage.init()
 
-const Settings = () => {
+const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
     const [type, setType] = useStatePersist('TYPE', 'local')
     const [players, setPlayers] = useStatePersist('PLAYERS', '2')
     const [theme, setTheme] = useStatePersist('THEME', 'classic')
@@ -17,7 +19,6 @@ const Settings = () => {
     const [bot2, setBot2] = useStatePersist('BOT2', true)
     const [bot3, setBot3] = useStatePersist('BOT3', true)
     const [bot4, setBot4] = useStatePersist('BOT4', true)
-    console.log(bot2)
     return (
         <VStack
             flex={1}
@@ -128,7 +129,19 @@ const Settings = () => {
                         *Stay tuned for future version
                     </Text>
                 </ScrollView>
-                <Button size="lg" mx={5} mb={5}>
+                <Button
+                    size="lg"
+                    mx={5}
+                    mb={5}
+                    onPress={() =>
+                        navigation.navigate('Play', {
+                            players: +players,
+                            bot1,
+                            bot2,
+                            bot3,
+                            bot4,
+                        })
+                    }>
                     Start game
                 </Button>
             </VStack>
