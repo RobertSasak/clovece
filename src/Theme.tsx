@@ -1,5 +1,6 @@
 import React from 'react'
 import { extendTheme, INativebaseConfig, NativeBaseProvider } from 'native-base'
+import { MaterialCommunityIcons } from '@native-base/icons'
 
 const config: INativebaseConfig = {
     // strictMode: 'warn'
@@ -18,6 +19,13 @@ const theme = extendTheme({
             700: '#26545f',
             800: '#13333a',
             900: '#001216',
+        },
+    },
+    components: {
+        Icon: {
+            defaultProps: {
+                as: MaterialCommunityIcons,
+            },
         },
     },
     config: {

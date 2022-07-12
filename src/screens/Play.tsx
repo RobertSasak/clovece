@@ -1,13 +1,12 @@
 import React, { useMemo } from 'react'
 import { Local } from 'boardgame.io/multiplayer'
-import { Box, IconButton } from 'native-base'
+import { Box, Icon, IconButton } from 'native-base'
 
 import client from '../helpers/client'
 import Game from '../Game'
 import Board from '../Board'
 import SimpleBot from '../bots/simple'
 import { RootStackScreenProps } from '../navigation/types'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 interface Bots {
     '1'?: typeof SimpleBot
@@ -45,15 +44,20 @@ const Play = ({ navigation, route }: RootStackScreenProps<'Play'>) => {
             }),
         })
     }, [players, bot1, bot2, bot3, bot4])
-
     return (
-        <Box safeArea bg="lightBlue.200" p={5} flex={1}>
-            <IconButton
-                name="plus"
-                as={MaterialCommunityIcons}
-                onPress={() => navigation.navigate('Settings')}
-            />
+        <Box safeArea bg="lightBlue.200" flex={1}>
             <Client playerID="0" />
+            <Box safeAreaTop safeAreaRight position="absolute">
+                <IconButton
+                    color="black"
+                    size="lg"
+                    _icon={{
+                        name: 'menu',
+                    }}
+                    variant="outline"
+                    onPress={() => navigation.navigate('Settings')}
+                />
+            </Box>
         </Box>
     )
 }
