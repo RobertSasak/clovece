@@ -62,12 +62,12 @@ const Die: React.FC<Props> = ({ x, y, size, value, disabled, onPress }) => {
                     Animated.timing(scale, {
                         toValue: (size / SIZE) * 1.2,
                         duration: 500,
-                        useNativeDriver: true,
+                        useNativeDriver: false,
                     }),
                     Animated.timing(scale, {
                         toValue: size / SIZE,
                         duration: 500,
-                        useNativeDriver: true,
+                        useNativeDriver: false,
                     }),
                 ]),
                 Animated.sequence([
@@ -91,32 +91,70 @@ const Die: React.FC<Props> = ({ x, y, size, value, disabled, onPress }) => {
     }, [disabled])
 
     return (
-        <AnimatedG x={x} y={y} scale={scale} onPress={roll} onClick={roll}>
-            <Rect
-                x={-100}
-                y={-100}
-                width={200}
-                height={200}
-                stroke="gray"
-                strokeWidth={1}
-                rx={20}
-                ry={20}
-                fill="white"
-            />
-            <AnimatedCircle
-                fill="black"
-                cx={-60}
-                cy={-60}
-                r={25}
-                opacity={d1}
-            />
-            <AnimatedCircle fill="black" cx={0} cy={-60} r={25} opacity={d2} />
-            <AnimatedCircle fill="black" cx={60} cy={-60} r={25} opacity={d3} />
-            <AnimatedCircle fill="black" cx={-60} cy={60} r={25} opacity={d4} />
-            <AnimatedCircle fill="black" cx={0} cy={60} r={25} opacity={d5} />
-            <AnimatedCircle fill="black" cx={60} cy={60} r={25} opacity={d6} />
-            <AnimatedCircle fill="black" cx={0} cy={0} r={25} opacity={d7} />
-        </AnimatedG>
+        <G x={x} y={y}>
+            <AnimatedG scale={scale} onPress={roll} onClick={roll}>
+                <Rect
+                    x={-100}
+                    y={-100}
+                    width={200}
+                    height={200}
+                    stroke="gray"
+                    strokeWidth={1}
+                    rx={20}
+                    ry={20}
+                    fill="white"
+                />
+                <AnimatedCircle
+                    fill="black"
+                    cx={-60}
+                    cy={-60}
+                    r={25}
+                    opacity={d1}
+                />
+                <AnimatedCircle
+                    fill="black"
+                    cx={0}
+                    cy={-60}
+                    r={25}
+                    opacity={d2}
+                />
+                <AnimatedCircle
+                    fill="black"
+                    cx={60}
+                    cy={-60}
+                    r={25}
+                    opacity={d3}
+                />
+                <AnimatedCircle
+                    fill="black"
+                    cx={-60}
+                    cy={60}
+                    r={25}
+                    opacity={d4}
+                />
+                <AnimatedCircle
+                    fill="black"
+                    cx={0}
+                    cy={60}
+                    r={25}
+                    opacity={d5}
+                />
+                <AnimatedCircle
+                    fill="black"
+                    cx={60}
+                    cy={60}
+                    r={25}
+                    opacity={d6}
+                />
+                <AnimatedCircle
+                    fill="black"
+                    cx={0}
+                    cy={0}
+                    r={25}
+                    opacity={d7}
+                />
+            </AnimatedG>
+        </G>
     )
 }
 

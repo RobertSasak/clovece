@@ -1,11 +1,9 @@
 import React from 'react'
 import { Heading, Button, ScrollView, VStack, Text } from 'native-base'
-import { useStatePersist, syncStorage } from 'use-state-persist'
+import { useStatePersist } from 'use-state-persist'
 
 import PlayerInput from '../components/PlayerInput'
 import { RootStackScreenProps } from '../navigation/types'
-
-syncStorage.init()
 
 const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
     const [type, setType] = useStatePersist('TYPE', 'local')
@@ -33,7 +31,8 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                 borderRadius={{ sm: 20 }}
                 maxW={480}
                 w="100%"
-                maxH={{ sm: 700 }}>
+                flexShrink={1}
+                m={{ sm: 5 }}>
                 <ScrollView h="100px" p={5}>
                     <Heading size="4xl" textAlign="center">
                         Clovece

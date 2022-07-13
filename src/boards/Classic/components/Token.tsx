@@ -36,7 +36,7 @@ export const Token: React.FC<TokenProps> = ({
         Animated.timing(xy, {
             toValue: { x, y },
             duration: 400,
-            useNativeDriver: true,
+            useNativeDriver: false,
         }).start()
     }, [x, y])
     useEffect(() => {
@@ -49,12 +49,12 @@ export const Token: React.FC<TokenProps> = ({
                     Animated.timing(animation, {
                         toValue: 1,
                         duration: 500,
-                        useNativeDriver: true,
+                        useNativeDriver: false,
                     }),
                     Animated.timing(animation, {
                         toValue: 0,
                         duration: 500,
-                        useNativeDriver: true,
+                        useNativeDriver: false,
                     }),
                 ]),
             ).start()
@@ -72,8 +72,6 @@ export const Token: React.FC<TokenProps> = ({
             <AG y={wiggle}>
                 <Path
                     d="M10,-20 -10,-20 -15,0 a15,15 0 0,0 30,0 Z"
-                    x={-size / 2}
-                    y={-size / 2}
                     stroke="black"
                     strokeWidth={disabled ? 2 : 4}
                     opacity={disabled ? 0.7 : 1}

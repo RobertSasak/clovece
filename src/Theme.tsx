@@ -3,7 +3,7 @@ import { extendTheme, INativebaseConfig, NativeBaseProvider } from 'native-base'
 import { MaterialCommunityIcons } from '@native-base/icons'
 
 const config: INativebaseConfig = {
-    // strictMode: 'warn'
+    strictMode: 'warn',
 }
 
 const theme = extendTheme({

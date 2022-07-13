@@ -9,10 +9,10 @@ import SimpleBot from '../bots/simple'
 import { RootStackScreenProps } from '../navigation/types'
 
 interface Bots {
+    '0'?: typeof SimpleBot
     '1'?: typeof SimpleBot
     '2'?: typeof SimpleBot
     '3'?: typeof SimpleBot
-    '4'?: typeof SimpleBot
 }
 
 const Play = ({ navigation, route }: RootStackScreenProps<'Play'>) => {
@@ -21,17 +21,18 @@ const Play = ({ navigation, route }: RootStackScreenProps<'Play'>) => {
     const Client = useMemo(() => {
         const bots: Bots = {}
         if (bot1) {
-            bots['1'] = SimpleBot
+            bots['0'] = SimpleBot
         }
         if (bot2) {
-            bots['2'] = SimpleBot
+            bots['1'] = SimpleBot
         }
         if (bot3) {
-            bots['3'] = SimpleBot
+            bots['2'] = SimpleBot
         }
         if (bot4) {
-            bots['4'] = SimpleBot
+            bots['3'] = SimpleBot
         }
+
         return client({
             game: Game,
             board: Board,
