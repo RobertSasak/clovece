@@ -66,7 +66,6 @@ export interface GenericPlayingBoardProps {
     players: {
         id: string
         name: string
-        color: Color
     }[]
     currentPlayer: string
     die: number

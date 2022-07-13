@@ -31,7 +31,6 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                 borderRadius={{ sm: 20 }}
                 maxW={480}
                 w="100%"
-                flexShrink={1}
                 m={{ sm: 5 }}>
                 <ScrollView h="100px" p={5}>
                     <Heading size="4xl" textAlign="center">
@@ -136,9 +135,9 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                         navigation.navigate('Play', {
                             players: +players,
                             bot1,
-                            bot2,
-                            bot3,
-                            bot4,
+                            bot2: +players > 1 && bot2,
+                            bot3: +players > 2 && bot3,
+                            bot4: +players > 3 && bot4,
                         })
                     }>
                     Start game

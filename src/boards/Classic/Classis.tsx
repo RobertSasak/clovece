@@ -152,8 +152,6 @@ const Classic = ({
                     ))}
                     <Lap data={squares.lap} />
                     <Die
-                        // x={diePosition[+currentPlayer].x}
-                        // y={diePosition[+currentPlayer].y}
                         x={WIDTH / 2}
                         y={HEIGHT / 2}
                         size={DIE_SIZE}
@@ -167,25 +165,6 @@ const Classic = ({
                             }
                         }}
                     />
-                    {/* {players.map(
-                        (p, i) =>
-                            currentPlayer === p.id && (
-                                <Die
-                                    x={diePosition[i].x}
-                                    y={diePosition[i].y}
-                                    size={DIE_SIZE}
-                                    value={die}
-                                    disabled={!!dieError}
-                                    onPress={() => {
-                                        if (dieError) {
-                                            toast.show({ title: dieError })
-                                        } else {
-                                            onDiePress()
-                                        }
-                                    }}
-                                />
-                            ),
-                    )} */}
                     {tokens.map(
                         ({ id, sector, fieldId, playerId, color, error }) => {
                             const field =
