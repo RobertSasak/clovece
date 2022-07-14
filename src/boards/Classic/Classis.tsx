@@ -26,7 +26,7 @@ const SQUARE_ZERO = {
 
 const playerBox = stepper(
     { x: START / 2, y: START / 2 },
-    '↘L↗',
+    '↘L↗D',
     WIDTH - START,
     false,
 )

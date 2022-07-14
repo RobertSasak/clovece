@@ -19,11 +19,6 @@ const game: Game<State> = {
         move,
         select,
     },
-    turn: {
-        onEnd: (G) => {
-            G.moves = 0
-        },
-    },
     endIf,
     ai: {
         enumerate,
