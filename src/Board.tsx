@@ -11,7 +11,9 @@ const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves }) => {
     const players = ctx.playOrder.map((id) => ({
         id,
         name: id,
+        place: G.players[id].place,
     }))
+
     const { move, roll } = moves
     const selectedBoard = BoardType.CLASSIC
     const tokens = G.tokens.map((t) => ({

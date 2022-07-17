@@ -120,6 +120,10 @@ export const move: Move<State> = (G, ctx, id: number) => {
             G.players[ctx.currentPlayer].finish[token.fieldId] = true
             G.players[ctx.currentPlayer].end[token.color] = true
             G.players[ctx.currentPlayer].finished++
+            if (G.players[ctx.currentPlayer].finished === 4) {
+                G.finished++
+                G.players[ctx.currentPlayer].place = G.finished
+            }
         } else {
             token.fieldId = newFieldId
             if (G.squares[newFieldId] !== null) {

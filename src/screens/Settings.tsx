@@ -8,7 +8,7 @@ import { RootStackScreenProps } from '../navigation/types'
 const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
     const [type, setType] = useStatePersist('TYPE', 'local')
     const [players, setPlayers] = useStatePersist('PLAYERS', '2')
-    const [theme, setTheme] = useStatePersist('THEME', 'classic')
+    // const [theme, setTheme] = useStatePersist('THEME', 'classic')
     const [player1, setPlayer1] = useStatePersist('PLAYER1', '')
     const [player2, setPlayer2] = useStatePersist('PLAYER2', '')
     const [player3, setPlayer3] = useStatePersist('PLAYER3', '')
@@ -73,7 +73,7 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                             4
                         </Button>
                     </Button.Group>
-                    <Heading size="lg" my="3">
+                    {/* <Heading size="lg" my="3">
                         Theme
                     </Heading>
                     <Button.Group isAttached>
@@ -88,7 +88,7 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                             isDisabled>
                             Modern*
                         </Button>
-                    </Button.Group>
+                    </Button.Group> */}
                     <Heading size="lg" my="3">
                         Players
                     </Heading>

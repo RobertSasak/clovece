@@ -12,6 +12,7 @@ import { Token } from './components/Token'
 import { getColor } from './colors'
 import Start from './components/Start'
 import Road from './components/Road'
+import Badge from '../components/Badge'
 
 const WIDTH = 1000
 const HEIGHT = 1000
@@ -148,6 +149,11 @@ const Classic = ({
                             />
                             <Start data={squares.start[i]} />
                             <End data={squares.end[i]} />
+                            {p.place && (
+                                <G {...playerBox[i]}>
+                                    <Badge x={50} y={0} place={p.place} />
+                                </G>
+                            )}
                         </React.Fragment>
                     ))}
                     <Lap data={squares.lap} />

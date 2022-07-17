@@ -58,6 +58,7 @@ export default (ctx: Ctx) => {
                 },
                 finish: [false, false, false, false],
                 finished: 0,
+                place: null,
             },
         }),
         {},
@@ -71,5 +72,6 @@ export default (ctx: Ctx) => {
         die: null,
         moves: 0,
         players,
+        finished: 0,
     }
 }

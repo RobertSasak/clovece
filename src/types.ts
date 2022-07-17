@@ -30,6 +30,7 @@ export type Players = {
         }
         finish: [boolean, boolean, boolean, boolean]
         finished: number
+        place: null | number
     }
 }
 
@@ -41,6 +42,7 @@ export interface State {
     moves: number
     kicked: number | null
     players: Players
+    finished: number
 }
 
 export enum FieldSector {
@@ -66,6 +68,7 @@ export interface GenericPlayingBoardProps {
     players: {
         id: string
         name: string
+        place: null | number
     }[]
     currentPlayer: string
     die: number
