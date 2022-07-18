@@ -14,6 +14,9 @@ const EXIT_SQUARES = [
 
 export const moveError = (G: State, ctx: Ctx, id: number): false | string => {
     const token = G.tokens[id]
+    if (ctx.gameover) {
+        return 'The game is over.'
+    }
     if (G.kicked !== null) {
         return 'Select which player gets kicked out token before continue.'
     }
@@ -64,7 +67,7 @@ export const moveError = (G: State, ctx: Ctx, id: number): false | string => {
         let moves = G.moves
         let fieldId = token.fieldId
         const exitSquare = EXIT_SQUARES[+ctx.currentPlayer]
-        while (moves > 0) {
+        while (moves > 0 && fieldId !== exitSquare) {
             fieldId++
             moves--
             if (fieldId === exitSquare) {
@@ -106,7 +109,7 @@ export const move: Move<State> = (G, ctx, id: number) => {
         const exitSquare = EXIT_SQUARES[+ctx.currentPlayer]
         G.squares[token.fieldId] = null
         let newFieldId = token.fieldId
-        while (G.moves > 0) {
+        while (G.moves > 0 && newFieldId !== exitSquare) {
             G.moves--
             newFieldId = (newFieldId + 1) % G.size
             if (newFieldId === exitSquare) {
@@ -133,7 +136,7 @@ export const move: Move<State> = (G, ctx, id: number) => {
         }
     }
     G.moves = 0
-    if (G.die !== 6) {
+    if (G.die !== 6 && G.kicked === null) {
         ctx.events?.endTurn()
     }
 }

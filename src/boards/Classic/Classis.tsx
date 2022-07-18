@@ -13,6 +13,7 @@ import { getColor } from './colors'
 import Start from './components/Start'
 import Road from './components/Road'
 import Badge from '../components/Badge'
+import Select from './components/Select'
 
 const WIDTH = 1000
 const HEIGHT = 1000
@@ -94,13 +95,14 @@ const Classic = ({
     onTokenPress,
     players,
     currentPlayer,
+    onPlayerSelect,
 }: GenericPlayingBoardProps) => {
     const { width, height } = useWindowDimensions()
     const maxSize = Math.min(width, height)
     const toast = useToast()
     return (
-        <VStack safeArea alignItems="center">
-            <Box w={maxSize} h={maxSize}>
+        <VStack alignItems="center">
+            <Box w={maxSize - 10} h={maxSize - 10}>
                 <Svg
                     height="100%"
                     width="100%"
@@ -141,6 +143,19 @@ const Classic = ({
                                     rx="30"
                                 />
                             </G>
+                        </React.Fragment>
+                    ))}
+                    {players.map((p, i) => (
+                        <G
+                            {...playerBox[i]}
+                            key={i}
+                            onPress={() => onPlayerSelect(p.id)}
+                            onClick={() => onPlayerSelect(p.id)}>
+                            <Select visible={p.selectable} />
+                        </G>
+                    ))}
+                    {players.map((p, i) => (
+                        <React.Fragment key={i}>
                             <Road
                                 data={[
                                     squares.lap[exits[i]],

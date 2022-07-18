@@ -33,6 +33,7 @@ const Client = ({ players, bot1, bot2, bot3, bot4 }: Props) => {
             board: Board,
             debug: {
                 collapseOnLoad: true,
+                hideToggleButton: true,
             },
             numPlayers: players,
             multiplayer,

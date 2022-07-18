@@ -10,7 +10,7 @@ import { State } from './types'
 
 const game: Game<State> = {
     name: 'Clovece',
-    seed: 0,
+    // seed: 0,
     minPlayers: 2,
     maxPlayers: 4,
     setup,

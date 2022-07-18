@@ -69,6 +69,7 @@ export interface GenericPlayingBoardProps {
         id: string
         name: string
         place: null | number
+        selectable: boolean
     }[]
     currentPlayer: string
     die: number
@@ -76,6 +77,7 @@ export interface GenericPlayingBoardProps {
     tokens: TokenUI[]
     onTokenPress: (tokenId: number) => void
     onDiePress: () => void
+    onPlayerSelect: (playerId: string) => void
 }
 
 export interface Point {

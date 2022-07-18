@@ -9,14 +9,15 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
     const [type, setType] = useStatePersist('TYPE', 'local')
     const [players, setPlayers] = useStatePersist('PLAYERS', '2')
     // const [theme, setTheme] = useStatePersist('THEME', 'classic')
-    const [player1, setPlayer1] = useStatePersist('PLAYER1', '')
-    const [player2, setPlayer2] = useStatePersist('PLAYER2', '')
-    const [player3, setPlayer3] = useStatePersist('PLAYER3', '')
-    const [player4, setPlayer4] = useStatePersist('PLAYER4', '')
-    const [bot1, setBot1] = useStatePersist('BOT1', false)
-    const [bot2, setBot2] = useStatePersist('BOT2', true)
-    const [bot3, setBot3] = useStatePersist('BOT3', true)
-    const [bot4, setBot4] = useStatePersist('BOT4', true)
+    // const [player1, setPlayer1] = useStatePersist('PLAYER1', '')
+    // const [player2, setPlayer2] = useStatePersist('PLAYER2', '')
+    // const [player3, setPlayer3] = useStatePersist('PLAYER3', '')
+    // const [player4, setPlayer4] = useStatePersist('PLAYER4', '')
+    // const [bot1, setBot1] = useStatePersist('BOT1', false)
+    // const [bot2, setBot2] = useStatePersist('BOT2', true)
+    // const [bot3, setBot3] = useStatePersist('BOT3', true)
+    // const [bot4, setBot4] = useStatePersist('BOT4', true)
+    const [bots, setBots] = useStatePersist('BOTS', false)
     return (
         <VStack
             flex={1}
@@ -27,12 +28,15 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
             <VStack
                 safeArea
                 bg="white"
-                flex={1}
                 borderRadius={{ sm: 20 }}
                 maxW={480}
                 w="100%"
+                minH={{
+                    base: '100%',
+                    sm: undefined,
+                }}
                 m={{ sm: 5 }}>
-                <ScrollView h="100px" p={5}>
+                <ScrollView p={5}>
                     <Heading size="4xl" textAlign="center">
                         Clovece
                     </Heading>
@@ -73,6 +77,21 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                             4
                         </Button>
                     </Button.Group>
+                    <Heading size="lg" my="3">
+                        Play with bots
+                    </Heading>
+                    <Button.Group isAttached>
+                        <Button
+                            onPress={() => setBots(true)}
+                            variant={bots ? 'solid' : 'outline'}>
+                            Yes
+                        </Button>
+                        <Button
+                            onPress={() => setBots(false)}
+                            variant={!bots ? 'solid' : 'outline'}>
+                            No
+                        </Button>
+                    </Button.Group>
                     {/* <Heading size="lg" my="3">
                         Theme
                     </Heading>
@@ -89,7 +108,7 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                             Modern*
                         </Button>
                     </Button.Group> */}
-                    <Heading size="lg" my="3">
+                    {/* <Heading size="lg" my="3">
                         Players
                     </Heading>
                     <PlayerInput
@@ -122,7 +141,7 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                         onChange={setPlayer4}
                         bot={bot4}
                         setBot={setBot4}
-                    />
+                    /> */}
                     <Text color={'gray.400'}>
                         *Stay tuned for future version
                     </Text>
@@ -134,10 +153,10 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                     onPress={() =>
                         navigation.navigate('Play', {
                             players: +players,
-                            bot1,
-                            bot2: +players > 1 && bot2,
-                            bot3: +players > 2 && bot3,
-                            bot4: +players > 3 && bot4,
+                            bot1: false,
+                            bot2: +players > 1 && bots,
+                            bot3: +players > 2 && bots,
+                            bot4: +players > 3 && bots,
                         })
                     }>
                     Start game
