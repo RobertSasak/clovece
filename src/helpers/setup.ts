@@ -69,7 +69,7 @@ export default (ctx: Ctx) => {
         tokens,
         squares: new Array(size).fill(null),
         kicked: null,
-        die: null,
+        die: 6,
         moves: 0,
         players,
         finished: 0,

@@ -5,23 +5,22 @@ import { Rect, G, Circle } from 'react-native-svg'
 interface Props {
     x: number
     y: number
-    size: number
     value: number
     disabled: boolean
     onPress: () => void
 }
 
-const SIZE = 200
+const SIZE = 100
 
 const AnimatedG = Animated.createAnimatedComponent(G)
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 
 const inputRange = [0, 59, 60, 119, 120, 179, 180, 239, 240, 299, 300, 360]
 
-const Die: React.FC<Props> = ({ x, y, size, value, disabled, onPress }) => {
+const Die: React.FC<Props> = ({ x, y, value, disabled, onPress }) => {
     const v = useRef(new Animated.Value(value)).current
     const v60 = v.interpolate({ inputRange: [1, 6], outputRange: [0, 360] })
-    const scale = useRef(new Animated.Value(size / 200)).current
+    const scale = useRef(new Animated.Value(1)).current
 
     const d1 = v60.interpolate({
         inputRange,
@@ -53,6 +52,27 @@ const Die: React.FC<Props> = ({ x, y, size, value, disabled, onPress }) => {
     })
     useEffect(() => {
         v.setValue(value)
+    }, [value])
+
+    useEffect(() => {
+        if (disabled) {
+            scale.setValue(1)
+        } else {
+            Animated.loop(
+                Animated.sequence([
+                    Animated.timing(scale, {
+                        toValue: 1.1,
+                        duration: 500,
+                        useNativeDriver: false,
+                    }),
+                    Animated.timing(scale, {
+                        toValue: 1,
+                        duration: 500,
+                        useNativeDriver: false,
+                    }),
+                ]),
+            ).start()
+        }
     }, [disabled, value])
 
     const roll = useCallback(() => {
@@ -60,12 +80,12 @@ const Die: React.FC<Props> = ({ x, y, size, value, disabled, onPress }) => {
             Animated.parallel([
                 Animated.sequence([
                     Animated.timing(scale, {
-                        toValue: (size / SIZE) * 1.2,
+                        toValue: 1.2,
                         duration: 500,
                         useNativeDriver: false,
                     }),
                     Animated.timing(scale, {
-                        toValue: size / SIZE,
+                        toValue: 1,
                         duration: 500,
                         useNativeDriver: false,
                     }),
@@ -94,63 +114,63 @@ const Die: React.FC<Props> = ({ x, y, size, value, disabled, onPress }) => {
         <G x={x} y={y}>
             <AnimatedG scale={scale} onPress={roll} onClick={roll}>
                 <Rect
-                    x={-100}
-                    y={-100}
-                    width={200}
-                    height={200}
+                    x={-SIZE / 2}
+                    y={-SIZE / 2}
+                    width={SIZE}
+                    height={SIZE}
                     stroke="gray"
-                    strokeWidth={1}
-                    rx={20}
-                    ry={20}
+                    strokeWidth={disabled ? 1 : 2}
+                    rx={SIZE / 10}
+                    ry={SIZE / 10}
                     fill="white"
                 />
                 <AnimatedCircle
                     fill="black"
-                    cx={-60}
-                    cy={-60}
-                    r={25}
+                    cx={-30}
+                    cy={-30}
+                    r={12}
                     opacity={d1}
                 />
                 <AnimatedCircle
                     fill="black"
                     cx={0}
-                    cy={-60}
-                    r={25}
+                    cy={-30}
+                    r={12}
                     opacity={d2}
                 />
                 <AnimatedCircle
                     fill="black"
-                    cx={60}
-                    cy={-60}
-                    r={25}
+                    cx={30}
+                    cy={-30}
+                    r={12}
                     opacity={d3}
                 />
                 <AnimatedCircle
                     fill="black"
-                    cx={-60}
-                    cy={60}
-                    r={25}
+                    cx={-30}
+                    cy={30}
+                    r={12}
                     opacity={d4}
                 />
                 <AnimatedCircle
                     fill="black"
                     cx={0}
-                    cy={60}
-                    r={25}
+                    cy={30}
+                    r={12}
                     opacity={d5}
                 />
                 <AnimatedCircle
                     fill="black"
-                    cx={60}
-                    cy={60}
-                    r={25}
+                    cx={30}
+                    cy={30}
+                    r={12}
                     opacity={d6}
                 />
                 <AnimatedCircle
                     fill="black"
                     cx={0}
                     cy={0}
-                    r={25}
+                    r={12}
                     opacity={d7}
                 />
             </AnimatedG>

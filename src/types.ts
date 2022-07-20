@@ -38,7 +38,7 @@ export interface State {
     size: number
     tokens: Token[]
     squares: (number | null)[]
-    die: number | null
+    die: number
     moves: number
     kicked: number | null
     players: Players

@@ -28,7 +28,7 @@ const Board: React.FC<BoardProps<State>> = ({ G, ctx, moves }) => {
             boardType={selectedBoard}
             players={players}
             currentPlayer={ctx.currentPlayer}
-            die={G.die ?? 6}
+            die={G.die}
             onTokenPress={move}
             onDiePress={roll}
             dieError={rollError(G, ctx)}

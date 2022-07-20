@@ -14,12 +14,12 @@ import Start from './components/Start'
 import Road from './components/Road'
 import Badge from '../components/Badge'
 import Select from './components/Select'
+import PlayerBox from './components/PlayerrBox'
 
+const START = 350
 const WIDTH = 1000
 const HEIGHT = 1000
-const START = 350
 const STEP = 90
-const DIE_SIZE = 100
 const TOKEN_SIZE = 30
 const SQUARE_ZERO = {
     x: -40,
@@ -125,26 +125,14 @@ const Classic = ({
                         stroke="#bb3630"
                         fill="transparent"
                     />
-                    {players.map((p, i) => (
-                        <React.Fragment key={i}>
-                            <G {...playerBox[i]}>
-                                <Rect
-                                    width={START / 2}
-                                    height={START / 2}
-                                    x={-START / 4}
-                                    y={-START / 4}
-                                    fill={
-                                        p.id === currentPlayer
-                                            ? 'yellow'
-                                            : 'transparent'
-                                    }
-                                    stroke="#333"
-                                    strokeWidth={p.id === currentPlayer ? 4 : 0}
-                                    rx="30"
-                                />
-                            </G>
-                        </React.Fragment>
-                    ))}
+                    {players.map(
+                        (p, i) =>
+                            p.id === currentPlayer && (
+                                <G {...playerBox[i]} key={i}>
+                                    <PlayerBox />
+                                </G>
+                            ),
+                    )}
                     {players.map((p, i) => (
                         <G
                             {...playerBox[i]}
@@ -175,7 +163,6 @@ const Classic = ({
                     <Die
                         x={WIDTH / 2}
                         y={HEIGHT / 2}
-                        size={DIE_SIZE}
                         value={die}
                         disabled={!!dieError}
                         onPress={() => {

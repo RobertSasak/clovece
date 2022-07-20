@@ -2,7 +2,6 @@ import React from 'react'
 import { Heading, Button, ScrollView, VStack, Text } from 'native-base'
 import { useStatePersist } from 'use-state-persist'
 
-import PlayerInput from '../components/PlayerInput'
 import { RootStackScreenProps } from '../navigation/types'
 
 const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
