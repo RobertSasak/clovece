@@ -90,12 +90,12 @@ const squares: Squares = {
 const Classic = ({
     die,
     dieError,
-    onDiePress,
-    tokens,
-    onTokenPress,
     players,
     currentPlayer,
-    onPlayerSelect,
+    tokens,
+    onDiePress = () => undefined,
+    onTokenPress = () => undefined,
+    onPlayerSelect = () => undefined,
 }: GenericPlayingBoardProps) => {
     const { width, height } = useWindowDimensions()
     const maxSize = Math.min(width, height)

@@ -75,9 +75,9 @@ export interface GenericPlayingBoardProps {
     die: number
     dieError: string | false
     tokens: TokenUI[]
-    onTokenPress: (tokenId: number) => void
-    onDiePress: () => void
-    onPlayerSelect: (playerId: string) => void
+    onTokenPress?: (tokenId: number) => void
+    onDiePress?: () => void
+    onPlayerSelect?: (playerId: string) => void
 }
 
 export interface Point {

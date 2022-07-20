@@ -20,7 +20,6 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
     return (
         <VStack
             flex={1}
-            bg="lightBlue.200"
             alignItems="center"
             justifyContent="center"
             alignContent={'stretch'}>
@@ -150,7 +149,7 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                     mx={5}
                     mb={5}
                     onPress={() =>
-                        navigation.navigate('Play', {
+                        navigation.navigate('Tutorial', {
                             players: +players,
                             bot1: false,
                             bot2: +players > 1 && bots,
