@@ -33,6 +33,12 @@ const theme = extendTheme({
     },
 })
 
+type ThemeType = typeof theme
+
+declare module 'native-base' {
+    interface ICustomTheme extends ThemeType {}
+}
+
 const Theme: React.FC = ({ children }) => (
     <NativeBaseProvider theme={theme} config={config}>
         {children}

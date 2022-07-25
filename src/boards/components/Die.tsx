@@ -50,13 +50,11 @@ const Die: React.FC<Props> = ({ x, y, value, disabled, onPress }) => {
         inputRange,
         outputRange: [1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
     })
-    useEffect(() => {
-        v.setValue(value)
-    }, [value])
 
     useEffect(() => {
         if (disabled) {
             scale.setValue(1)
+            v.setValue(value)
         } else {
             Animated.loop(
                 Animated.sequence([

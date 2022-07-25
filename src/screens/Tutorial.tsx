@@ -31,7 +31,7 @@ const steps: Step[] = [
         },
         text: (
             <>
-                You have may play this game before under various names. This is
+                You may have play this game before under various names. This is
                 a slightly improved version. Once you play it you will never
                 wanted to play the original version again.
             </>
@@ -97,7 +97,7 @@ const steps: Step[] = [
                     sector: FieldSector.LAP,
                     fieldId: 0,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 1,
@@ -105,7 +105,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 1,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 2,
@@ -113,7 +113,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 2,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 3,
@@ -121,7 +121,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 3,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
             ],
             players: [{ id: '0', name: '', place: null, selectable: false }],
@@ -140,7 +140,7 @@ const steps: Step[] = [
                     sector: FieldSector.LAP,
                     fieldId: 4,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 1,
@@ -148,7 +148,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 1,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 2,
@@ -156,7 +156,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 2,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 3,
@@ -164,7 +164,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 3,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
             ],
             players: [{ id: '0', name: '', place: null, selectable: false }],
@@ -196,7 +196,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 1,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 2,
@@ -204,7 +204,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 2,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 3,
@@ -212,7 +212,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 3,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 4,
@@ -228,7 +228,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 1,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 6,
@@ -236,7 +236,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 2,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 7,
@@ -244,7 +244,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 3,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
             ],
             players: [
@@ -279,7 +279,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 1,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 2,
@@ -287,7 +287,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 2,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 3,
@@ -295,7 +295,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 3,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 4,
@@ -311,7 +311,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 1,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 6,
@@ -319,7 +319,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 2,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 7,
@@ -327,7 +327,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 3,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
             ],
             players: [
@@ -354,7 +354,7 @@ const steps: Step[] = [
                     sector: FieldSector.LAP,
                     fieldId: 9,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 1,
@@ -362,7 +362,7 @@ const steps: Step[] = [
                     sector: FieldSector.END,
                     fieldId: 1,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 2,
@@ -370,7 +370,7 @@ const steps: Step[] = [
                     sector: FieldSector.END,
                     fieldId: 2,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 3,
@@ -378,7 +378,7 @@ const steps: Step[] = [
                     sector: FieldSector.END,
                     fieldId: 3,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 4,
@@ -386,7 +386,7 @@ const steps: Step[] = [
                     sector: FieldSector.END,
                     fieldId: 0,
                     playerId: '0',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 5,
@@ -394,7 +394,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 1,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 6,
@@ -402,7 +402,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 2,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
                 {
                     id: 7,
@@ -410,7 +410,7 @@ const steps: Step[] = [
                     sector: FieldSector.START,
                     fieldId: 3,
                     playerId: '1',
-                    error: 'You cannot move this token',
+                    error: 'You cannot move tokens in tutorial.',
                 },
             ],
             players: [
