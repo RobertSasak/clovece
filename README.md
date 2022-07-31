@@ -1,2 +1,3 @@
-# clovece
+# Ludo for geeks
+
 Matfyzacke clovece

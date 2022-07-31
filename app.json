@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "clovece",
-        "slug": "clovece",
+        "name": "Ludo for geeks",
+        "slug": "Ludo",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/icon.png",

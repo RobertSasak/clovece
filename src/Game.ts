@@ -9,7 +9,7 @@ import { select } from './moves/select'
 import { State } from './types'
 
 const game: Game<State> = {
-    name: 'Clovece',
+    name: 'ludo',
     // seed: 0,
     minPlayers: 2,
     maxPlayers: 4,

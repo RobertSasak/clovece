@@ -35,8 +35,8 @@ const Settings = ({ navigation }: RootStackScreenProps<'Settings'>) => {
                 }}
                 m={{ sm: 5 }}>
                 <ScrollView p={5}>
-                    <Heading size="4xl" textAlign="center">
-                        Clovece
+                    <Heading size="2xl" textAlign="center">
+                        Ludo for geeks
                     </Heading>
                     <Heading size="lg" my="3">
                         Game type
