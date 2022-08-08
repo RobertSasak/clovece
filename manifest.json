@@ -2,8 +2,8 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "lang": "en",
-  "name": "clovece",
-  "short_name": "clovece",
+  "name": "Ludo for geeks",
+  "short_name": "Ludo for geeks",
   "start_url": "/?utm_source=web_app_manifest",
   "orientation": "portrait",
   "icons": [

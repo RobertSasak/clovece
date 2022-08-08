@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/clovece/static/js/app.72ea5fe1.chunk.js",
-    "app.js.map": "/clovece/static/js/app.72ea5fe1.chunk.js.map",
-    "runtime~app.js": "/clovece/static/js/runtime~app.317b92f5.js",
-    "runtime~app.js.map": "/clovece/static/js/runtime~app.317b92f5.js.map",
-    "static/js/2.a6a29493.chunk.js": "/clovece/static/js/2.a6a29493.chunk.js",
-    "static/js/2.a6a29493.chunk.js.map": "/clovece/static/js/2.a6a29493.chunk.js.map",
+    "app.js": "/clovece/static/js/app.1cbdb4ae.chunk.js",
+    "app.js.map": "/clovece/static/js/app.1cbdb4ae.chunk.js.map",
+    "runtime~app.js": "/clovece/static/js/runtime~app.a8407ea4.js",
+    "runtime~app.js.map": "/clovece/static/js/runtime~app.a8407ea4.js.map",
+    "static/js/2.643a7253.chunk.js": "/clovece/static/js/2.643a7253.chunk.js",
+    "static/js/2.643a7253.chunk.js.map": "/clovece/static/js/2.643a7253.chunk.js.map",
     "fonts/AntDesign.ttf": "/clovece/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/clovece/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/clovece/./fonts/Feather.ttf",
@@ -24,11 +24,11 @@
     "index.html": "/clovece/index.html",
     "manifest.json": "/clovece/manifest.json",
     "serve.json": "/clovece/serve.json",
-    "static/js/2.a6a29493.chunk.js.LICENSE.txt": "/clovece/static/js/2.a6a29493.chunk.js.LICENSE.txt"
+    "static/js/2.643a7253.chunk.js.LICENSE.txt": "/clovece/static/js/2.643a7253.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime~app.317b92f5.js",
-    "static/js/2.a6a29493.chunk.js",
-    "static/js/app.72ea5fe1.chunk.js"
+    "static/js/runtime~app.a8407ea4.js",
+    "static/js/2.643a7253.chunk.js",
+    "static/js/app.1cbdb4ae.chunk.js"
   ]
 }
