@@ -52,9 +52,14 @@ const Die: React.FC<Props> = ({ x, y, value, disabled, onPress }) => {
     })
 
     useEffect(() => {
+        scale.setValue(1)
+        v.stopAnimation()
+        v.setValue(value)
+    }, [value])
+
+    useEffect(() => {
         if (disabled) {
             scale.setValue(1)
-            v.setValue(value)
         } else {
             Animated.loop(
                 Animated.sequence([
@@ -71,7 +76,7 @@ const Die: React.FC<Props> = ({ x, y, value, disabled, onPress }) => {
                 ]),
             ).start()
         }
-    }, [disabled, value])
+    }, [disabled])
 
     const roll = useCallback(() => {
         if (!disabled) {
@@ -92,12 +97,12 @@ const Die: React.FC<Props> = ({ x, y, value, disabled, onPress }) => {
                     Animated.timing(v, {
                         toValue: 6,
                         duration: 500,
-                        useNativeDriver: true,
+                        useNativeDriver: false,
                     }),
                     Animated.timing(v, {
                         toValue: 1,
                         duration: 500,
-                        useNativeDriver: true,
+                        useNativeDriver: false,
                     }),
                 ]),
             ]).start(() => {
@@ -110,7 +115,11 @@ const Die: React.FC<Props> = ({ x, y, value, disabled, onPress }) => {
 
     return (
         <G x={x} y={y}>
-            <AnimatedG scale={scale} onPress={roll} onClick={roll}>
+            <AnimatedG
+                scale={scale}
+                onPress={roll}
+                onClick={roll}
+                style={{ cursor: 'pointer' }}>
                 <Rect
                     x={-SIZE / 2}
                     y={-SIZE / 2}

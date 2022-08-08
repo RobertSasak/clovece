@@ -441,7 +441,7 @@ const Tutorial = ({ navigation, route }: RootStackScreenProps<'Tutorial'>) => {
         setStep(step - 1)
     }, [step])
     return (
-        <ZStack justifyContent="center" alignItems="center">
+        <ZStack flex={1} justifyContent="center" alignItems="center">
             <Classic {...steps[step].state} />
             <Box
                 bg="white"

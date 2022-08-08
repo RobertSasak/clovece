@@ -30,7 +30,7 @@ const Play = ({ navigation, route }: RootStackScreenProps<'Play'>) => {
                     </Modal.Footer>
                 </Modal.Content>
             </Modal>
-            <Box safeArea flex={1} justifyContent="center" p="3">
+            <Box safeArea flex={1} justifyContent="center" alignItems="center">
                 <Client
                     players={players}
                     bot1={bot1}

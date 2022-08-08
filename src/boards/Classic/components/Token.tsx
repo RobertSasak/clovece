@@ -61,7 +61,13 @@ export const Token: React.FC<TokenProps> = ({
         }
     }, [disabled])
     return (
-        <AG x={xy.x} y={xy.y} onClick={onPress} onPress={onPress}>
+        <AG
+            x={xy.x}
+            y={xy.y}
+            onClick={onPress}
+            onPress={onPress}
+            style={{ cursor: 'pointer' }}>
+            <Circle r={40} fill="transparent" />
             <ACircle
                 r={glow}
                 fill={color}
