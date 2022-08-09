@@ -6,14 +6,14 @@ import { State } from '../types'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const rollError = (G: State, ctx: Ctx): false | string => {
+    if (ctx.gameover) {
+        return 'The game is over.'
+    }
     if (G.moves !== 0) {
         return 'Finish your move before before rolling die.'
     }
     if (G.kicked !== null) {
         return 'Select which player gets kicked out token before rolling die again.'
-    }
-    if (ctx.gameover) {
-        return 'The game is over.'
     }
     return false
 }

@@ -138,7 +138,8 @@ const Classic = ({
                             {...playerBox[i]}
                             key={i}
                             onPress={() => onPlayerSelect(p.id)}
-                            onClick={() => onPlayerSelect(p.id)}>
+                            onClick={() => onPlayerSelect(p.id)}
+                            style={{ cursor: 'pointer' }}>
                             <Select visible={p.selectable} />
                         </G>
                     ))}
