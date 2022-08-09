@@ -1,7 +1,7 @@
 {
   "files": {
-    "app.js": "/clovece/static/js/app.1cbdb4ae.chunk.js",
-    "app.js.map": "/clovece/static/js/app.1cbdb4ae.chunk.js.map",
+    "app.js": "/clovece/static/js/app.4e29a05d.chunk.js",
+    "app.js.map": "/clovece/static/js/app.4e29a05d.chunk.js.map",
     "runtime~app.js": "/clovece/static/js/runtime~app.a8407ea4.js",
     "runtime~app.js.map": "/clovece/static/js/runtime~app.a8407ea4.js.map",
     "static/js/2.643a7253.chunk.js": "/clovece/static/js/2.643a7253.chunk.js",
@@ -29,6 +29,6 @@
   "entrypoints": [
     "static/js/runtime~app.a8407ea4.js",
     "static/js/2.643a7253.chunk.js",
-    "static/js/app.1cbdb4ae.chunk.js"
+    "static/js/app.4e29a05d.chunk.js"
   ]
 }
